@@ -20,8 +20,8 @@ export class AccountComponent implements OnInit {
   reviews: Review[]; 
   reviewLocations: string[]=[];
 
-  dummyGetBookings(){
-    this.AccSer.dummyGetBookings("yo").subscribe(books => this.bookings = books);
+  getBookings(){
+    this.AccSer.getBookings(this.data.id).subscribe(books => this.bookings = books);
     for(let i=0;i<2;i++)
     {
       this.LodgServ.get(this.bookings[i].lodgingId.toString())
@@ -59,7 +59,7 @@ export class AccountComponent implements OnInit {
   ngOnInit(): void {
     this.dummyGet();
     this.dummyGetReviews();
-    this.dummyGetBookings();
+    this.getBookings();
   }
 
 }
