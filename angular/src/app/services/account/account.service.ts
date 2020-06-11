@@ -120,7 +120,8 @@ export class AccountService {
                 given:'John'
             },
             phone:'1234567891',
-            age:"Adult"
+            age:"Adult",
+            image: null
         },
         {
             id: '2',
@@ -131,7 +132,8 @@ export class AccountService {
                 given:'Jane'
             },
             phone:'9876543219',
-            age:"Adult"
+            age:"Adult",
+            image: null
         }]}]
         let obvAcc = of(acc);
         return obvAcc;
