@@ -23,7 +23,7 @@ export class AccountService {
     this.apiUrl$ = config.get().pipe(map((cfg) => cfg.api.account));
   }
 
-  getBookings(id?: string, limit?: number): Observable<Booking[]>{
+  getBookings(accountId?: string, limit?: number): Observable<Booking[]>{
     let books: Booking[] = [];
     let bookOne: Booking = {
       id: "1",
@@ -91,13 +91,14 @@ export class AccountService {
     books.push(bookFour);
 
     // Represents server side sorting, filtering
-    books = books.filter(booking => booking.accountId == id).sort((a, b) => Number(b.id) - Number(a.id));
+    books = books.filter(booking => booking.accountId == accountId).sort((a, b) => Number(b.id) - Number(a.id));
     
     // const options = id ? { params: new HttpParams().set('id', id) } : {};
-    // options.params.set('limit', '2');
+    // options.params.set('limit', limit.toString());
+    // options.params.set('accountId', accountId)
     // this.apiUrl$.pipe(concatMap((url) => this.http.get<Account[]>(url, options)));
 
-    return of(books).pipe(map(bookings => bookings.slice(0, 2)));
+    return of(books);
   }
 
   dummyGetReveiws(id: string): Observable<Review[]> {

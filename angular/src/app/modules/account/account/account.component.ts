@@ -7,6 +7,8 @@ import { ActivatedRoute } from '@angular/router';
 import { Lodging } from 'src/app/data/lodging.model';
 import { LodgingService } from 'src/app/services/lodging/lodging.service';
 
+import { map } from 'rxjs/operators';
+
 
 @Component({
   selector: 'uic-account',
@@ -21,7 +23,7 @@ export class AccountComponent implements OnInit {
   reviewLocations: string[]=[];
 
   getBookings(){
-    this.AccSer.getBookings(this.data.id).subscribe(books => this.bookings = books);
+    this.AccSer.getBookings(this.data.id).pipe(map(bookings => bookings.slice(0, 2))).subscribe(books => this.bookings = books);
     for(let i=0;i<2;i++)
     {
       this.LodgServ.get(this.bookings[i].lodgingId.toString())
