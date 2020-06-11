@@ -5,7 +5,7 @@
         <br>
         <h1 class="title is-2">account</h1>
         <div class="tile is-ancestor">
-          <div class="tile is-6">
+          <div class="tile is-6 left-tile">
             <div class="tile is-parent is-vertical">
               <div class="tile box has-background-dark is-child">
                 <h2 class="title has-text-light is-4">name</h2>
@@ -187,9 +187,9 @@
                   <br>
 
                   <div class="level">
-                    <div class="level-left">
+                    <div class="columns is-multiline">
                       <div class="level-item has-text-centered" *ngFor="let x of data.profiles">
-                        <div class="card">
+                        <div class="card profile-card">
                           <div class="card-content">
                             <figure class="image is-128x128">
                               <img *ngIf="x.image" alt="placeholder image" class="is-rounded" [src]="x.image">
