@@ -49,9 +49,10 @@ export class AccountComponent implements OnInit {
 
   //http get to retrieve account information from account service using account id
   dummyGet(){
-    let x=1;
+    let x=this.AccSer.getUserId();
+    console.log(x);
     //const x = +this.route.snapshot.paramMap.get('id');
-    this.AccSer.get("x").subscribe(data => this.data = data[0]);
+    this.AccSer.get(x).subscribe(data => this.data = data[0]);
     this.obscure();
   }
 
