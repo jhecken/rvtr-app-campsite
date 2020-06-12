@@ -52,7 +52,8 @@ describe('AccountComponent', () => {
             given:'John'
         },
         phone:'1234567891',
-        age:"Adult"
+        age:"Adult",
+        image:null
     },
     {
         id: '2',
@@ -63,7 +64,8 @@ describe('AccountComponent', () => {
             given:'Jane'
         },
         phone:'9876543219',
-        age:"Adult"
+        age:"Adult",
+        image:null
     }]}];
   const mockReviews: Review[] = [
     {
@@ -115,7 +117,7 @@ describe('AccountComponent', () => {
   // }));
 
   beforeEach(() => {
-    mockAccountService =  jasmine.createSpyObj(['get', 'dummyGetBookings', 'dummyGetReveiws']);
+    mockAccountService =  jasmine.createSpyObj(['get', 'getBookings', 'dummyGetReveiws']);
     mockRoute =           jasmine.createSpyObj(['snapshot']);
     mockLodgingService =  jasmine.createSpyObj(['get']);
 
@@ -136,7 +138,7 @@ describe('AccountComponent', () => {
   it('should create', () => {
     mockAccountService.get.and.returnValue(of(accountMock));
     mockAccountService.dummyGetReveiws.and.returnValue(of(mockReviews));
-    mockAccountService.dummyGetBookings.and.returnValue(of(mockBookings));
+    mockAccountService.getBookings.and.returnValue(of(mockBookings));
 
     mockLodgingService.get.and.returnValue(of(mockLodging));
 

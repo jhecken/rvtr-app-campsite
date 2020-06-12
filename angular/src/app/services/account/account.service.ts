@@ -23,7 +23,7 @@ export class AccountService {
     this.apiUrl$ = config.get().pipe(map((cfg) => cfg.api.account));
   }
 
-  dummyGetBookings(id: string): Observable<Booking[]>{
+  getBookings(accountId?: string, limit?: number): Observable<Booking[]>{
     let books: Booking[] = [];
     let bookOne: Booking = {
       id: "1",
@@ -55,8 +55,49 @@ export class AccountService {
       },
       status: null
     }
+    let bookThree: Booking = {
+      id: "3",
+      accountId: "2",
+      lodgingId: "3",
+      guests: null,
+      rentals: null,
+      stay: {
+        id: "3",
+        checkIn: new Date("2/20/2020"),
+        checkOut: new Date("2/25/2020"),
+        dateCreated: null,
+        dateModified: null
+      },
+      status: null
+    }
+    let bookFour: Booking = {
+      id: "4",
+      accountId: "1",
+      lodgingId: "4",
+      guests: null,
+      rentals: null,
+      stay: {
+        id: "4",
+        checkIn: new Date("6/12/2020"),
+        checkOut: new Date("6/17/2020"),
+        dateCreated: null,
+        dateModified: null
+      },
+      status: null
+    }
     books.push(bookOne);
     books.push(bookTwo);
+    books.push(bookThree);
+    books.push(bookFour);
+
+    // Represents server side sorting, filtering
+    books = books.filter(booking => booking.accountId == accountId).sort((a, b) => Number(b.id) - Number(a.id));
+    
+    // const options = id ? { params: new HttpParams().set('id', id) } : {};
+    // options.params.set('limit', limit.toString());
+    // options.params.set('accountId', accountId)
+    // this.apiUrl$.pipe(concatMap((url) => this.http.get<Account[]>(url, options)));
+
     return of(books);
   }
 
@@ -119,7 +160,8 @@ export class AccountService {
                 given:'John'
             },
             phone:'1234567891',
-            age:"Adult"
+            age:"Adult",
+            image: null
         },
         {
             id: '2',
@@ -130,7 +172,8 @@ export class AccountService {
                 given:'Jane'
             },
             phone:'9876543219',
-            age:"Adult"
+            age:"Adult",
+            image: null
         }]}]
         let obvAcc = of(acc);
         return obvAcc;

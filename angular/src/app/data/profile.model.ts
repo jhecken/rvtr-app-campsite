@@ -16,4 +16,5 @@ export interface Profile {
   name: Name;
   phone: string;
   age: "Adult" | "Child";
+  image: string;
 }
