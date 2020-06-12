@@ -4,12 +4,24 @@ import { AccountService } from 'src/app/services/account/account.service';
 import { Payment } from 'src/app/data/payment.model';
 import { Profile } from 'src/app/data/profile.model';
 import { ActivatedRoute, Router } from '@angular/router';
+import { trigger, transition, animate, style } from '@angular/animations';
 import * as _ from 'lodash';
 
 @Component({
   selector: 'uic-edit-account',
   templateUrl: './edit-account.component.html',
-  styleUrls: ['./edit-account.component.scss']
+  styleUrls: ['./edit-account.component.scss'],
+  animations: [
+    trigger('slideInOut', [
+      transition(':enter', [
+        style({transform: 'translateY(-100%)'}),
+        animate('200ms ease-in', style({transform: 'translateY(0%)'}))
+      ]),
+      transition(':leave', [
+        animate('200ms ease-in', style({transform: 'translateY(-100%)'}))
+      ])
+    ])
+  ]
 })
 export class EditAccountComponent implements OnInit {
 
@@ -24,20 +36,12 @@ export class EditAccountComponent implements OnInit {
   //functions
   //boolean toggle to show/hide the add new payment section in html
   toggleCard(){
-    if(this.hideCard){
-    this.hideCard=false;
-    }else{
-      this.hideCard=true;
-    }
+    this.hideCard = !this.hideCard;
   }
 
   //boolean toggle to show/hide the add new profile section in html
   toggleProfile(){
-    if(this.hideProfile){
-    this.hideProfile=false;
-    }else{
-      this.hideProfile=true;
-    }
+    this.hideProfile = !this.hideProfile;
   }
 
   //function to check if an input field is nul/undefined/or white spaces
