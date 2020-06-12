@@ -24,20 +24,24 @@ export class AccountComponent implements OnInit {
 
   getBookings(){
     this.AccSer.getBookings(this.data.id).pipe(map(bookings => bookings.slice(0, 2))).subscribe(books => this.bookings = books);
-    for(let i=0;i<2;i++)
+    if(this.bookings.length>=1){
+    for(let i=0;i<this.bookings.length;i++)
     {
       this.LodgServ.get(this.bookings[i].lodgingId.toString())
       .subscribe(lodge=>this.bookingLocations.push(lodge[0].name));
     }
   }
+  }
 
   dummyGetReviews(){
     this.AccSer.dummyGetReveiws("hi").subscribe( val => this.reviews = val);
-    for(let i=0;i<2;i++)
+    if(this.reviews.length>=1){
+    for(let i=0;i<this.reviews.length;i++)
     {
       this.LodgServ.get(this.reviews[i].hotelId.toString())
       .subscribe(lodge=>this.reviewLocations.push(lodge[0].name));
     }
+  }
   }
 
   dummyGet(){

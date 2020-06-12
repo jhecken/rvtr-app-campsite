@@ -16,11 +16,30 @@ export class EditAccountComponent implements OnInit {
   imageError: string;
   isImageSaved: boolean;
   cardImageBase64: string;
+  hideCard:boolean=true;
+  hideProfile:boolean=true;
+
+  toggleCard(){
+    if(this.hideCard){
+    this.hideCard=false;
+    }else{
+      this.hideCard=true;
+    }
+  }
+
+  toggleProfile(){
+    if(this.hideProfile){
+    this.hideProfile=false;
+    }else{
+      this.hideProfile=true;
+    }
+  }
 
   isNullOrWhitespace(input:string) {
     if (typeof input === 'undefined' || input == null) return true;
     return input.replace(/\s/g, '').length < 1;
 }
+
   //adds a new credit card info to the displayed list
   addCard(cardName:string,cardNumberr:number,cardExpi:Date){
     //validation to check entered card name is not empty, 15 digit number, and future expiration date
@@ -36,9 +55,10 @@ export class EditAccountComponent implements OnInit {
       cardNumber:cardNumberr.toString()
     }
     this.data.payments.push(newCard);
-    console.log('Successfully added to the list')
-  }
-  }
+    this.toggleCard();
+    console.log('Successfully added to the list');
+  }}
+  
 
   fileChangeEvent(fileInput: any) {
     this.imageError = null;
@@ -122,6 +142,7 @@ export class EditAccountComponent implements OnInit {
       image: img
     }
     this.data.profiles.push(newProfile);
+    this.toggleProfile();
   }
 
 
