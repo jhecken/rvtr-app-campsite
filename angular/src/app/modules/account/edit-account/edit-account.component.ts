@@ -71,6 +71,7 @@ export class EditAccountComponent implements OnInit {
 
   //remove a payment card from arrays of payments in the data:Account property
   removeCard(card){
+    
     this.data.payments
     .splice(this.data.payments.indexOf(card),1);
   }
