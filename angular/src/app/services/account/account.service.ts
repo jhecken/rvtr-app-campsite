@@ -136,8 +136,7 @@ export class AccountService {
             stateProvince:'Texas',
             street:'1234 testing st.',
             unit:'24'
-        }
-        ,
+        },
         name: 'John Doe',
         payments:[{
             id:'1',
