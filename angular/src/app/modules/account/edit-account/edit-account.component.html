@@ -64,7 +64,7 @@
               </div>
               <div class="tile box has-background-dark is-child">
                 <h2 class="title has-text-light is-4">payments <button class="button is-small" (click)="toggleCard()" type="button">Add</button></h2>
-                <div *ngIf="!hideCard" class="level-left">
+                <div *ngIf="!hideCard" [@slideInOut] class="level-left">
                     <div class="level-item has-text-light">
                       <div>
                         <p class="heading">bank</p>
@@ -85,7 +85,6 @@
                       </div>
                     </div>
                   </div>
-                  <br>
                 <div class="level" *ngFor="let x of data.payments">
                   <div class="level-left">
                     <div class="level-item has-text-light">
@@ -121,7 +120,7 @@
               <div class="tile is-parent">
                 <div class="tile box is-child">
                   <h2 class="title is-4">profiles <button class="button is-small" (click)="toggleProfile()" type="button">Add</button></h2>
-                  <div *ngIf="!hideProfile">
+                  <div *ngIf="!hideProfile" [@slideInOut]>
                   <form>
                     <div class="form-group">
                         <fieldset class="form-group">
