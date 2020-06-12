@@ -15,13 +15,15 @@ import { map } from 'rxjs/operators';
   templateUrl: './account.component.html',
 })
 export class AccountComponent implements OnInit {
-  
+  //properties
   data: Account;
   bookings: Booking[];
   bookingLocations:string[]=[];
   reviews: Review[]; 
   reviewLocations: string[]=[];
 
+  //functions
+  //http get to call the most recent booking information from the booking service. Bookings will be sorted on the API end. using account id.
   getBookings(){
     this.AccSer.getBookings(this.data.id).pipe(map(bookings => bookings.slice(0, 2))).subscribe(books => this.bookings = books);
     if(this.bookings.length>=1){
@@ -33,6 +35,7 @@ export class AccountComponent implements OnInit {
   }
   }
 
+  //http get to call the most recent reviews by the account from the review service. using account id.
   dummyGetReviews(){
     this.AccSer.dummyGetReveiws("hi").subscribe( val => this.reviews = val);
     if(this.reviews.length>=1){
@@ -44,6 +47,7 @@ export class AccountComponent implements OnInit {
   }
   }
 
+  //http get to retrieve account information from account service using account id
   dummyGet(){
     let x=1;
     //const x = +this.route.snapshot.paramMap.get('id');
@@ -51,6 +55,7 @@ export class AccountComponent implements OnInit {
     this.obscure();
   }
 
+  //hashing the credit card number displayed.
   obscure(){
     for(let i = 0; i < this.data.payments.length; i++){
       this.data.payments[i].cardNumber = "***********"+ this.data.payments[i].cardNumber.substring(11,16);
