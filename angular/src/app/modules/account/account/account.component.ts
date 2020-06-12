@@ -22,7 +22,7 @@ export class AccountComponent implements OnInit {
 
   dummyGetBookings(){
     this.AccSer.dummyGetBookings("yo").subscribe(books => this.bookings = books);
-    for(let i=0;i<2;i++)
+    for(let i=0;i<1;i++)
     {
       this.LodgServ.get(this.bookings[i].lodgingId.toString())
       .subscribe(lodge=>this.bookingLocations.push(lodge[0].name));
@@ -31,7 +31,7 @@ export class AccountComponent implements OnInit {
 
   dummyGetReviews(){
     this.AccSer.dummyGetReveiws("hi").subscribe( val => this.reviews = val);
-    for(let i=0;i<2;i++)
+    for(let i=0;i<1;i++)
     {
       this.LodgServ.get(this.reviews[i].hotelId.toString())
       .subscribe(lodge=>this.reviewLocations.push(lodge[0].name));
