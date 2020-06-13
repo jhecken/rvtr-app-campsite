@@ -15,8 +15,16 @@ describe('AccountComponent', () => {
   let fixture: ComponentFixture<AccountComponent>;
 
   let mockAccountService;
-  let mockRoute;
   let mockLodgingService;
+  const activatedRouteStub = {
+    snapshot: {
+      paramMap: {
+        get() {
+          return 1;
+        }
+      }
+    }
+  }
 
   let mockAccount: Account[];
   let mockReviews: Review[];
@@ -24,16 +32,15 @@ describe('AccountComponent', () => {
   let mockLodging: Lodging[];
 
   beforeEach(async(() => {
-    mockAccountService = jasmine.createSpyObj(['get', 'getBookings', 'dummyGetReveiws']);
-    mockRoute = jasmine.createSpyObj(['snapshot']);
+    mockAccountService = jasmine.createSpyObj(['get', 'getBookings', 'dummyGetReveiws', 'getUserId']);
     mockLodgingService = jasmine.createSpyObj(['get']);
 
     TestBed.configureTestingModule({
       declarations: [AccountComponent],
       providers: [
         { provide: AccountService, useValue: mockAccountService },
-        { provide: ActivatedRoute, useValue: mockRoute },
-        { provide: LodgingService, useValue: mockLodgingService }
+        { provide: LodgingService, useValue: mockLodgingService },
+        { provide: ActivatedRoute, useValue: activatedRouteStub }
       ],
       schemas: [NO_ERRORS_SCHEMA]
     }).compileComponents();
@@ -134,6 +141,7 @@ describe('AccountComponent', () => {
     mockAccountService.get.and.returnValue(of(mockAccount));
     mockAccountService.dummyGetReveiws.and.returnValue(of(mockReviews));
     mockAccountService.getBookings.and.returnValue(of(mockBookings));
+    mockAccountService.getUserId.and.returnValue(1);
 
     mockLodgingService.get.and.returnValue(of(mockLodging));
 
@@ -149,6 +157,7 @@ describe('AccountComponent', () => {
       mockAccountService.get.and.returnValue(of(mockAccount));
       mockAccountService.dummyGetReveiws.and.returnValue(of(mockReviews));
       mockAccountService.getBookings.and.returnValue(of(mockBookings));
+      mockAccountService.getUserId.and.returnValue(1);
   
       mockLodgingService.get.and.returnValue(of(mockLodging));
   
