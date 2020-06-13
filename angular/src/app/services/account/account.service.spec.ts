@@ -95,7 +95,7 @@ describe('AccountService', () => {
 
     it('should get correct account id', ()=> {
 
-      service.get('0').subscribe((res)=>{
+      service.get('1').subscribe((res)=>{
         expect(res[0].id).toEqual(accountMock[0].id);
       });
 
