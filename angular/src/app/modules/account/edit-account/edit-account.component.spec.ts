@@ -19,7 +19,7 @@ describe('EditAccountComponent', () => {
   let mockAccount: Account[];
 
   let reader: FileReader;
-  let file: Blob;
+  let file;
 
   const activatedRouteStub = {
     snapshot: {
@@ -48,6 +48,7 @@ describe('EditAccountComponent', () => {
 
   beforeEach(() => {
     reader = new FileReader();
+    file = new File([],'', );
 
     mockAccount = [{
       id: '1',
@@ -213,6 +214,10 @@ describe('EditAccountComponent', () => {
 
   describe ('fileChangeEvent', () =>{
     it('should accept .jpg file', () =>{
+      mockAccountService.get.and.returnValue(of(mockAccount));
+      fixture.detectChanges();
+
+      component.fileChangeEvent(reader);
     })
   });
 
