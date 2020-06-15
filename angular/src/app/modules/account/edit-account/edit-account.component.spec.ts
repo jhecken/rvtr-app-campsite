@@ -18,6 +18,9 @@ describe('EditAccountComponent', () => {
 
   let mockAccount: Account[];
 
+  let reader: FileReader;
+  let file: Blob;
+
   const activatedRouteStub = {
     snapshot: {
       paramMap: {
@@ -30,8 +33,6 @@ describe('EditAccountComponent', () => {
 
   beforeEach(async(() => {
     mockAccountService = jasmine.createSpyObj(['get', 'put']);
-    //mockRouter = jasmine.createSpyObj(['navigateByUrl']);
-
 
     TestBed.configureTestingModule({
       declarations: [EditAccountComponent],
@@ -46,6 +47,8 @@ describe('EditAccountComponent', () => {
   }));
 
   beforeEach(() => {
+    reader = new FileReader();
+
     mockAccount = [{
       id: '1',
       address: {
@@ -209,7 +212,8 @@ describe('EditAccountComponent', () => {
   });
 
   describe ('fileChangeEvent', () =>{
-    
+    it('should accept .jpg file', () =>{
+    })
   });
 
   describe('addProfile', () => {
