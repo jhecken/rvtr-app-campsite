@@ -212,15 +212,6 @@ describe('EditAccountComponent', () => {
     });
   });
 
-  describe ('fileChangeEvent', () =>{
-    it('should accept .jpg file', () =>{
-      mockAccountService.get.and.returnValue(of(mockAccount));
-      fixture.detectChanges();
-
-      component.fileChangeEvent(reader);
-    })
-  });
-
   describe('addProfile', () => {
     it('should add valid profile', ()=>{
       mockAccountService.get.and.returnValue(of(mockAccount));
