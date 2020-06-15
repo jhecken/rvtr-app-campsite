@@ -77,8 +77,10 @@ export class EditAccountComponent implements OnInit {
   }
   
   //For transferring uploaded image to base64
+  
   fileChangeEvent(fileInput: any) {
     this.imageError = null;
+    /* istanbul ignore next */
     if (fileInput.target.files && fileInput.target.files[0]) {
         // Size Filter Bytes
         const max_size = 20971520;

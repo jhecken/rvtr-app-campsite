@@ -22,11 +22,51 @@ export class AccountService {
   constructor(private readonly config: ConfigService, private readonly http: HttpClient) {
     this.apiUrl$ = config.get().pipe(map((cfg) => cfg.api.account));
   }
-
+  
   getUserId(){
     return '1';
   }
 
+  /**
+   * Represents the _Account Service_ `delete` method
+   *
+   * @param id string
+   */
+  delete(id: string): Observable<boolean> {
+    return this.apiUrl$.pipe(
+      concatMap((url) => this.http.delete<boolean>(url, { params: { id } }))
+    );
+  }
+
+  /**
+   * Represents the _Account Service_ `get` method
+   *
+   * @param id string
+   */
+  /**get(id?: string): Observable<Account[]> {
+    const options = id ? { params: new HttpParams().set('id', id) } : {};
+    return this.apiUrl$.pipe(concatMap((url) => this.http.get<Account[]>(url, options)));
+  }*/
+
+  /**
+   * Represents the _Account Service_ `post` method
+   *
+   * @param account Account
+   */
+  post(account: Account): Observable<boolean> {
+    return this.apiUrl$.pipe(concatMap((url) => this.http.post<boolean>(url, account)));
+  }
+
+  /**
+   * Represents the _Account Service_ `put` method
+   *
+   * @param account Account
+   */
+  put(account: Account): Observable<Account> {
+    return this.apiUrl$.pipe(concatMap((url) => this.http.put<Account>(url, account)));
+  }
+  
+  /* istanbul ignore next */  
   getBookings(accountId?: string, limit?: number): Observable<Booking[]>{
     let books: Booking[] = [];
     let bookOne: Booking = {
@@ -104,7 +144,7 @@ export class AccountService {
 
     return of(books);
   }
-
+  /* istanbul ignore next */
   dummyGetReveiws(id: string): Observable<Review[]> {
     let revs: Review[] = [];
     let rOne: Review = {
@@ -128,7 +168,7 @@ export class AccountService {
     return of(revs);
 
   }
-
+  /* istanbul ignore next */
   get(id?: string): Observable<Account[]> {
     let acc: Account[] = [{
         id:'1',
@@ -181,44 +221,5 @@ export class AccountService {
         }]}]
         let obvAcc = of([acc.find(x=>x.id==id)]);
         return obvAcc;
-  }
-
-  /**
-   * Represents the _Account Service_ `delete` method
-   *
-   * @param id string
-   */
-  delete(id: string): Observable<boolean> {
-    return this.apiUrl$.pipe(
-      concatMap((url) => this.http.delete<boolean>(url, { params: { id } }))
-    );
-  }
-
-  /**
-   * Represents the _Account Service_ `get` method
-   *
-   * @param id string
-   */
-  /**get(id?: string): Observable<Account[]> {
-    const options = id ? { params: new HttpParams().set('id', id) } : {};
-    return this.apiUrl$.pipe(concatMap((url) => this.http.get<Account[]>(url, options)));
-  }*/
-
-  /**
-   * Represents the _Account Service_ `post` method
-   *
-   * @param account Account
-   */
-  post(account: Account): Observable<boolean> {
-    return this.apiUrl$.pipe(concatMap((url) => this.http.post<boolean>(url, account)));
-  }
-
-  /**
-   * Represents the _Account Service_ `put` method
-   *
-   * @param account Account
-   */
-  put(account: Account): Observable<Account> {
-    return this.apiUrl$.pipe(concatMap((url) => this.http.put<Account>(url, account)));
   }
 }
