@@ -26,10 +26,10 @@ describe('AccountComponent', () => {
     }
   };
 
-  let mockAccount: Account[];
-  let mockReviews: Review[];
-  let mockBookings: Booking[];
-  let mockLodging: Lodging[];
+  let accountMock: Account[];
+  let reviewsMock: Review[];
+  let bookingsMock: Booking[];
+  let lodgingMock: Lodging[];
 
   beforeEach(async(() => {
     accountServiceMock = jasmine.createSpyObj(['get', 'getBookings', 'dummyGetReveiws', 'getUserId']);
@@ -49,7 +49,7 @@ describe('AccountComponent', () => {
     component = fixture.componentInstance;
   }));
   beforeEach(() => {
-    mockAccount = [{
+    accountMock = [{
       id: '1',
       address: {
         id: '1',
@@ -99,7 +99,7 @@ describe('AccountComponent', () => {
         image: null
       }]
     }];
-    mockReviews = [
+    reviewsMock = [
       {
         id: '1',
         accountId: '1',
@@ -109,7 +109,7 @@ describe('AccountComponent', () => {
         rating: 4
       }
     ];
-    mockBookings = [
+    bookingsMock = [
       {
         id: '1',
         accountId: '1',
@@ -126,7 +126,7 @@ describe('AccountComponent', () => {
         status: null
       }
     ];
-    mockLodging = [
+    lodgingMock = [
       {
         id: '1',
         location: null,
@@ -138,12 +138,12 @@ describe('AccountComponent', () => {
   });
 
   it('should create', () => {
-    accountServiceMock.get.and.returnValue(of(mockAccount));
-    accountServiceMock.dummyGetReveiws.and.returnValue(of(mockReviews));
-    accountServiceMock.getBookings.and.returnValue(of(mockBookings));
+    accountServiceMock.get.and.returnValue(of(accountMock));
+    accountServiceMock.dummyGetReveiws.and.returnValue(of(reviewsMock));
+    accountServiceMock.getBookings.and.returnValue(of(bookingsMock));
     accountServiceMock.getUserId.and.returnValue(1);
 
-    lodgingServiceMock.get.and.returnValue(of(mockLodging));
+    lodgingServiceMock.get.and.returnValue(of(lodgingMock));
 
     fixture.detectChanges();
 
@@ -151,18 +151,18 @@ describe('AccountComponent', () => {
   });
 
   it('should not call lodging service if 0 reviews and bookings', () => {
-      mockReviews = [];
-      mockBookings = [];
+    reviewsMock = [];
+    bookingsMock = [];
 
-      accountServiceMock.get.and.returnValue(of(mockAccount));
-      accountServiceMock.dummyGetReveiws.and.returnValue(of(mockReviews));
-      accountServiceMock.getBookings.and.returnValue(of(mockBookings));
-      accountServiceMock.getUserId.and.returnValue(1);
+    accountServiceMock.get.and.returnValue(of(accountMock));
+    accountServiceMock.dummyGetReveiws.and.returnValue(of(reviewsMock));
+    accountServiceMock.getBookings.and.returnValue(of(bookingsMock));
+    accountServiceMock.getUserId.and.returnValue(1);
 
-      lodgingServiceMock.get.and.returnValue(of(mockLodging));
+    lodgingServiceMock.get.and.returnValue(of(lodgingMock));
 
-      fixture.detectChanges();
+    fixture.detectChanges();
 
-      expect(lodgingServiceMock.get).toHaveBeenCalledTimes(0);
+    expect(lodgingServiceMock.get).toHaveBeenCalledTimes(0);
   });
 });

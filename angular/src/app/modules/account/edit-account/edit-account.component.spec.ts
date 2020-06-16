@@ -28,7 +28,7 @@ describe('EditAccountComponent', () => {
   };
 
   beforeEach(async(() => {
-    accountServiceMock = jasmine.createSpyObj(['get', 'put', 'deletePay', 'deleteProf']);
+    accountServiceMock = jasmine.createSpyObj(['get', 'put']);
 
     TestBed.configureTestingModule({
       declarations: [EditAccountComponent],
@@ -130,21 +130,21 @@ describe('EditAccountComponent', () => {
   });
 
   describe('isNullOrWhitespace', () => {
-    it('should return false on null string', () => {
+    it('should return true on null string', () => {
 
-      expect(component.isNullOrWhitespace(null)).toBeFalse();
+      expect(component.isNullOrWhitespace(null)).toBeTrue();
     });
-    it('should return false on empty string', () => {
+    it('should return true on empty string', () => {
 
-      expect(component.isNullOrWhitespace('')).toBeFalse();
+      expect(component.isNullOrWhitespace('')).toBeTrue();
     });
-    it('should return false on string of spaces string', () => {
+    it('should return true on string of spaces string', () => {
 
-      expect(component.isNullOrWhitespace('  ')).toBeFalse();
+      expect(component.isNullOrWhitespace('  ')).toBeTrue();
     });
-    it('should return true on non null/emtpy string', () => {
+    it('should return false on non null/emtpy string', () => {
 
-      expect(component.isNullOrWhitespace('null')).toBeTrue();
+      expect(component.isNullOrWhitespace('null')).toBeFalse();
     });
   });
 
@@ -260,8 +260,6 @@ describe('EditAccountComponent', () => {
     it('should call put on AccountService with valid account', () => {
       accountServiceMock.get.and.returnValue(of(accountMock));
       accountServiceMock.put.and.returnValue(of(accountMock));
-      accountServiceMock.deleteProf.and.returnValue(of(true));
-      accountServiceMock.deletePay.and.returnValue(of(true));
       fixture.detectChanges();
 
       component.onSubmit();
