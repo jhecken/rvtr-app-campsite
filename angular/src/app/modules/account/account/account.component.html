@@ -9,7 +9,7 @@
           <div class="tile is-parent is-vertical">
             <div class="tile box has-background-dark is-child">
               <h2 class="title has-text-light is-4">name</h2>
-              <p class="title has-text-light is-6">{{data.name}}</p>
+              <p class="title has-text-light is-6">{{data?.name}}</p>
             </div>
  
             <div class="tile box has-background-dark is-child">
@@ -20,14 +20,14 @@
                   <div class="level-item has-text-light">
                     <div>
                       <p class="heading">street</p>
-                      <p class="title has-text-light is-6">{{data.address.street}}</p>
+                      <p class="title has-text-light is-6">{{data?.address.street}}</p>
                     </div>
                   </div>
 
                   <div class="level-item has-text-light">
                     <div>
                       <p class="heading">apt / unit</p>
-                      <p class="title has-text-light is-6">{{data.address.unit}}</p>
+                      <p class="title has-text-light is-6">{{data?.address.unit}}</p>
                     </div>
                   </div>
                 </div>
@@ -38,21 +38,21 @@
                   <div class="level-item has-text-light">
                     <div>
                       <p class="heading">city</p>
-                      <p class="title has-text-light is-6">{{data.address.city}}</p>
+                      <p class="title has-text-light is-6">{{data?.address.city}}</p>
                     </div>
                   </div>
 
                   <div class="level-item has-text-light">
                     <div>
                       <p class="heading">state</p>
-                      <p class="title has-text-light is-6">{{data.address.stateProvince}}</p>
+                      <p class="title has-text-light is-6">{{data?.address.stateProvince}}</p>
                     </div>
                   </div>
 
                   <div class="level-item has-text-light">
                     <div>
                       <p class="heading">Postal Code</p>
-                      <p class="title has-text-light is-6">{{data.address.postalCode}}</p>
+                      <p class="title has-text-light is-6">{{data?.address.postalCode}}</p>
                     </div>
                   </div>
                 </div>
@@ -63,7 +63,7 @@
                   <div class="level-item has-text-light">
                     <div>
                       <p class="heading">country</p>
-                      <p class="title has-text-light is-6">{{data.address.country}}</p>
+                      <p class="title has-text-light is-6">{{data?.address.country}}</p>
                     </div>
                   </div>
                 </div>
@@ -73,7 +73,7 @@
             <div class="tile box has-background-dark is-child">
               <h2 class="title has-text-light is-4">payments</h2>
 
-              <div class="level" *ngFor="let x of data.payments">
+              <div class="level" *ngFor="let x of data?.payments">
                 <div class="level-left">
                   <div class="level-item has-text-light">
                     <div>
@@ -109,7 +109,7 @@
 
                 <div class="level">
                   <div class="level-left">
-                    <div class="level-item has-text-centered" *ngFor="let x of data.profiles">
+                    <div class="level-item has-text-centered" *ngFor="let x of data?.profiles">
                       <div class="card">
                         <div class="card-content">
                           <figure class="image is-128x128">

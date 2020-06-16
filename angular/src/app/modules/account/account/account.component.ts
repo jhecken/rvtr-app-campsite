@@ -27,14 +27,13 @@ export class AccountComponent implements OnInit {
   // http get to call the most recent booking information from the booking service.
   // Bookings will be sorted on the API end. using account id.
   getBookings() {
-    this.AccSer.getBookings(this.data.id).pipe(map(bookings => bookings.slice(0, 2))).subscribe(books => this.bookings = books);
+    this.AccSer.getBookings(this.data.id.toString()).pipe(map(bookings => bookings.slice(0, 2))).subscribe(books => this.bookings = books);
     if (this.bookings.length >= 1) {
       for (const booking of this.bookings){
         this.LodgServ.get(booking.lodgingId.toString())
           .subscribe(lodge => this.bookingLocations.push(lodge[0].name));
       }
     }
-    console.log(this.bookingLocations);
   }
 
   // http get to call the most recent reviews by the account from the review service. using account id.
@@ -46,7 +45,6 @@ export class AccountComponent implements OnInit {
           .subscribe(lodge => this.reviewLocations.push(lodge[0].name));
       }
     }
-    console.log(this.reviewLocations);
   }
 
   // http get to retrieve account information from account service using account id
@@ -58,7 +56,7 @@ export class AccountComponent implements OnInit {
       this.data = data[0]; this.obscure();
       this.dummyGetReviews();
       this.getBookings();
-      console.log(this.data);
+      console.log(this.data.id);
     });
   }
 
