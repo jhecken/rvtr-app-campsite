@@ -13,13 +13,9 @@ describe('EditAccountComponent', () => {
   let component: EditAccountComponent;
   let fixture: ComponentFixture<EditAccountComponent>;
 
-  let mockAccountService;
-  let mockRouter;
+  let accountServiceMock;
 
-  let mockAccount: Account[];
-
-  let reader: FileReader;
-  let file;
+  let accountMock: Account[];
 
   const activatedRouteStub = {
     snapshot: {
@@ -29,16 +25,16 @@ describe('EditAccountComponent', () => {
         }
       }
     }
-  }
+  };
 
   beforeEach(async(() => {
-    mockAccountService = jasmine.createSpyObj(['get', 'put', 'deletePay', 'deleteProf']);
+    accountServiceMock = jasmine.createSpyObj(['get', 'put', 'deletePay', 'deleteProf']);
 
     TestBed.configureTestingModule({
       declarations: [EditAccountComponent],
       providers: [
         { provide: ActivatedRoute, useValue: activatedRouteStub },
-        { provide: AccountService, useValue: mockAccountService }
+        { provide: AccountService, useValue: accountServiceMock }
       ],
       schemas: [NO_ERRORS_SCHEMA],
       imports: [FormsModule, RouterTestingModule]
@@ -47,10 +43,7 @@ describe('EditAccountComponent', () => {
   }));
 
   beforeEach(() => {
-    reader = new FileReader();
-    file = new File([],'', );
-
-    mockAccount = [{
+    accountMock = [{
       id: '1',
       address: {
         id: '1',
@@ -64,13 +57,13 @@ describe('EditAccountComponent', () => {
       name: 'John Doe',
       payments: [{
         id: 1,
-        cardExpirationDate: new Date("7/9/21"),
+        cardExpirationDate: new Date('7/9/21'),
         cardName: 'Visa',
         cardNumber: '123456789123456'
       },
       {
         id: 2,
-        cardExpirationDate: new Date("1/22/21"),
+        cardExpirationDate: new Date('1/22/21'),
         cardName: 'Master',
         cardNumber: '987654321987654'
       },
@@ -84,7 +77,7 @@ describe('EditAccountComponent', () => {
           given: 'John'
         },
         phone: '1234567891',
-        age: "Adult",
+        age: 'Adult',
         image: null
       },
       {
@@ -96,7 +89,7 @@ describe('EditAccountComponent', () => {
           given: 'Jane'
         },
         phone: '9876543219',
-        age: "Adult",
+        age: 'Adult',
         image: null
       }]
     }];
@@ -110,91 +103,85 @@ describe('EditAccountComponent', () => {
   });
 
   it('should load account on creation', () => {
-    mockAccountService.get.and.returnValue(of(mockAccount));
+    accountServiceMock.get.and.returnValue(of(accountMock));
     fixture.detectChanges();
 
-    expect(component.data).toBe(mockAccount[0]);
+    expect(component.data).toBe(accountMock[0]);
   });
 
   describe('toggleCard', () => {
 
     it('should show card after toggle', () => {
-      //mockAccountService.get.and.returnValue(of(mockAccount));
-      //fixture.detectChanges();
-
       component.toggleCard();
 
-      expect(component.hideCard).toBeFalse;
-      //Test the actual element
+      expect(component.hideCard).toBeFalse();
+      // Test the actual element
     });
   });
 
   describe('toggleProfile', () => {
 
     it('should show profile after toggle', () => {
-      //mockAccountService.get.and.returnValue(of(mockAccount));
-      //fixture.detectChanges();
-
       component.toggleProfile();
 
-      expect(component.hideProfile).toBeFalse;
-      //Test the actual element
+      expect(component.hideProfile).toBeFalse();
+      // Test the actual element
     });
   });
 
   describe('isNullOrWhitespace', () => {
     it('should return false on null string', () => {
 
-      expect(component.isNullOrWhitespace(null)).toBeFalse;
+      expect(component.isNullOrWhitespace(null)).toBeFalse();
     });
     it('should return false on empty string', () => {
 
-      expect(component.isNullOrWhitespace('')).toBeFalse;
+      expect(component.isNullOrWhitespace('')).toBeFalse();
     });
     it('should return false on string of spaces string', () => {
 
-      expect(component.isNullOrWhitespace('  ')).toBeFalse;
+      expect(component.isNullOrWhitespace('  ')).toBeFalse();
     });
     it('should return true on non null/emtpy string', () => {
 
-      expect(component.isNullOrWhitespace('null')).toBeTrue;
+      expect(component.isNullOrWhitespace('null')).toBeTrue();
     });
   });
 
   describe('addCard', () => {
     it('should add valid card', () => {
-      mockAccountService.get.and.returnValue(of(mockAccount));
+      accountServiceMock.get.and.returnValue(of(accountMock));
       fixture.detectChanges();
 
-      let paymentCount = component.data.payments.length;
-      component.addCard('TestCard', 111111111111111, new Date("12/1/2022"));
+      const paymentCount = component.data.payments.length;
+      component.addCard('TestCard', 111111111111111, new Date('12/1/2022'));
 
       expect(component.data.payments.length).toBe(paymentCount + 1);
     });
     it('should not add card with empty name', () => {
-      mockAccountService.get.and.returnValue(of(mockAccount));
+      accountServiceMock.get.and.returnValue(of(accountMock));
       fixture.detectChanges();
 
-      let paymentCount = component.data.payments.length;
-      component.addCard('', 111111111111111, new Date("12/1/2022"));
+      const paymentCount = component.data.payments.length;
+      component.addCard('', 111111111111111, new Date('12/1/2022'));
 
       expect(component.data.payments.length).toBe(paymentCount);
     });
     it('should not add card with invalid number', () => {
-      mockAccountService.get.and.returnValue(of(mockAccount));
+      accountServiceMock.get.and.returnValue(of(accountMock));
       fixture.detectChanges();
 
-      let paymentCount = component.data.payments.length;
-      component.addCard('TestCard', 11111111111111, new Date("12/1/2022"));
+      const paymentCount = component.data.payments.length;
+      component.addCard('TestCard', 11111111111111, new Date('12/1/2022'));
 
       expect(component.data.payments.length).toBe(paymentCount);
     });
     it('should not add expired card', () => {
-      mockAccountService.get.and.returnValue(of(mockAccount));
+      accountServiceMock.get.and.returnValue(of(accountMock));
       fixture.detectChanges();
 
-      let paymentCount = component.data.payments.length;
-      component.addCard('TestCard', 111111111111111, new Date("12/1/1922"));
+      const paymentCount = component.data.payments.length;
+      component.addCard('TestCard', 111111111111111, new Date('12/1/1922'));
 
       expect(component.data.payments.length).toBe(paymentCount);
     });
@@ -202,19 +189,19 @@ describe('EditAccountComponent', () => {
 
   describe('removeCard', () => {
     it('removes the correct card', () => {
-      mockAccountService.get.and.returnValue(of(mockAccount));
+      accountServiceMock.get.and.returnValue(of(accountMock));
       fixture.detectChanges();
 
-      component.removeCard(mockAccount[0].payments[1]);
+      component.removeCard(accountMock[0].payments[1]);
 
       expect(component.data.payments.length).toBe(1);
-      expect(component.data.payments[0]).toBe(mockAccount[0].payments[0]);
+      expect(component.data.payments[0]).toBe(accountMock[0].payments[0]);
     });
   });
 
   describe('addProfile', () => {
-    it('should add valid profile', ()=>{
-      mockAccountService.get.and.returnValue(of(mockAccount));
+    it('should add valid profile', () => {
+      accountServiceMock.get.and.returnValue(of(accountMock));
       fixture.detectChanges();
 
       component.addProfile('Tim', 'Tom', 'Adult', 'tom@tim.com', 5551234567, null);
@@ -222,32 +209,32 @@ describe('EditAccountComponent', () => {
       expect(component.data.profiles.length).toBe(3);
       expect(component.data.profiles[2].email).toBe('tom@tim.com');
     });
-    it('should not add profile with empty name', () =>{
-      mockAccountService.get.and.returnValue(of(mockAccount));
+    it('should not add profile with empty name', () => {
+      accountServiceMock.get.and.returnValue(of(accountMock));
       fixture.detectChanges();
 
       component.addProfile('', 'Tom', 'Adult', 'tom@tim.com', 5551234567, null);
 
       expect(component.data.profiles.length).toBe(2);
     });
-    it('should not add profile with duplicate names', () =>{
-      mockAccountService.get.and.returnValue(of(mockAccount));
+    it('should not add profile with duplicate names', () => {
+      accountServiceMock.get.and.returnValue(of(accountMock));
       fixture.detectChanges();
 
       component.addProfile('Jane', 'Doe', 'Adult', 'tom@tim.com', 5551234567, null);
 
       expect(component.data.profiles.length).toBe(2);
     });
-    it('should not add profile with invalid phone number', () =>{
-      mockAccountService.get.and.returnValue(of(mockAccount));
+    it('should not add profile with invalid phone number', () => {
+      accountServiceMock.get.and.returnValue(of(accountMock));
       fixture.detectChanges();
 
       component.addProfile('Tim', 'Tom', 'Adult', 'tom@tim.com', 555123457, null);
 
       expect(component.data.profiles.length).toBe(2);
     });
-    it('should not add profile with empty email', () =>{
-      mockAccountService.get.and.returnValue(of(mockAccount));
+    it('should not add profile with empty email', () => {
+      accountServiceMock.get.and.returnValue(of(accountMock));
       fixture.detectChanges();
 
       component.addProfile('', 'Tom', 'Adult', '', 5551234567, null);
@@ -255,65 +242,65 @@ describe('EditAccountComponent', () => {
       expect(component.data.profiles.length).toBe(2);
     });
   });
-  
+
   describe('removeProfile', () => {
 
     it('should remove correct profile', () => {
-      mockAccountService.get.and.returnValue(of(mockAccount));
+      accountServiceMock.get.and.returnValue(of(accountMock));
       fixture.detectChanges();
 
-      component.removeProfile(mockAccount[0].profiles[0]);
+      component.removeProfile(accountMock[0].profiles[0]);
 
       expect(component.data.profiles.length).toBe(1);
-      expect(component.data.profiles[0]).toBe(mockAccount[0].profiles[0]);
+      expect(component.data.profiles[0]).toBe(accountMock[0].profiles[0]);
     });
   });
 
-  describe ('onSubmit', ()=>{
-    it('should call put on AccountService with valid account', () =>{
-      mockAccountService.get.and.returnValue(of(mockAccount));
-      mockAccountService.put.and.returnValue(of(mockAccount));
-      mockAccountService.deleteProf.and.returnValue(of(true));
-      mockAccountService.deletePay.and.returnValue(of(true));
+  describe('onSubmit', () => {
+    it('should call put on AccountService with valid account', () => {
+      accountServiceMock.get.and.returnValue(of(accountMock));
+      accountServiceMock.put.and.returnValue(of(accountMock));
+      accountServiceMock.deleteProf.and.returnValue(of(true));
+      accountServiceMock.deletePay.and.returnValue(of(true));
       fixture.detectChanges();
 
       component.onSubmit();
 
-      expect(mockAccountService.put).toHaveBeenCalled();
+      expect(accountServiceMock.put).toHaveBeenCalled();
     });
 
-    it('should not call put on AccountService with empty name', () =>{
-      mockAccountService.get.and.returnValue(of(mockAccount));
-      mockAccountService.put.and.returnValue(of(mockAccount));
+    it('should not call put on AccountService with empty name', () => {
+      accountServiceMock.get.and.returnValue(of(accountMock));
+      accountServiceMock.put.and.returnValue(of(accountMock));
       fixture.detectChanges();
 
       component.data.name = '';
 
       component.onSubmit();
 
-      expect(mockAccountService.put).toHaveBeenCalledTimes(0);
+      expect(accountServiceMock.put).toHaveBeenCalledTimes(0);
     });
-    it('should not call put on AccountService with empty payments', () =>{
-      mockAccountService.get.and.returnValue(of(mockAccount));
-      mockAccountService.put.and.returnValue(of(mockAccount));
+    it('should not call put on AccountService with empty payments', () => {
+      accountServiceMock.get.and.returnValue(of(accountMock));
+      accountServiceMock.put.and.returnValue(of(accountMock));
       fixture.detectChanges();
 
       component.data.payments = [];
 
       component.onSubmit();
 
-      expect(mockAccountService.put).toHaveBeenCalledTimes(0);
+      expect(accountServiceMock.put).toHaveBeenCalledTimes(0);
     });
-    it('should not call put on AccountService with invalid address', () =>{
-      mockAccountService.get.and.returnValue(of(mockAccount));
-      mockAccountService.put.and.returnValue(of(mockAccount));
+    it('should not call put on AccountService with invalid address', () => {
+      accountServiceMock.get.and.returnValue(of(accountMock));
+      accountServiceMock.put.and.returnValue(of(accountMock));
       fixture.detectChanges();
 
       component.data.address.street = '';
 
       component.onSubmit();
 
-      expect(mockAccountService.put).toHaveBeenCalledTimes(0);
+      expect(accountServiceMock.put).toHaveBeenCalledTimes(0);
     });
   });
 });
