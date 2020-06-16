@@ -6,6 +6,7 @@ import { ConfigService } from '../config/config.service';
 import { Account } from '../../data/account.model';
 import { Review } from '../../data/review.model';
 import { Booking } from '../../data/booking.model';
+import { Profile } from 'src/app/data/profile.model';
 
 @Injectable({
   providedIn: 'root',
@@ -27,45 +28,6 @@ export class AccountService {
     return '1';
   }
 
-  /**
-   * Represents the _Account Service_ `delete` method
-   *
-   * @param id string
-   */
-  delete(id: string): Observable<boolean> {
-    return this.apiUrl$.pipe(
-      concatMap((url) => this.http.delete<boolean>(url, { params: { id } }))
-    );
-  }
-
-  /**
-   * Represents the _Account Service_ `get` method
-   *
-   * @param id string
-   */
-  /**get(id?: string): Observable<Account[]> {
-    const options = id ? { params: new HttpParams().set('id', id) } : {};
-    return this.apiUrl$.pipe(concatMap((url) => this.http.get<Account[]>(url, options)));
-  }*/
-
-  /**
-   * Represents the _Account Service_ `post` method
-   *
-   * @param account Account
-   */
-  post(account: Account): Observable<boolean> {
-    return this.apiUrl$.pipe(concatMap((url) => this.http.post<boolean>(url, account)));
-  }
-
-  /**
-   * Represents the _Account Service_ `put` method
-   *
-   * @param account Account
-   */
-  put(account: Account): Observable<Account> {
-    return this.apiUrl$.pipe(concatMap((url) => this.http.put<Account>(url, account)));
-  }
-  
   /* istanbul ignore next */  
   getBookings(accountId?: string, limit?: number): Observable<Booking[]>{
     let books: Booking[] = [];
@@ -168,58 +130,110 @@ export class AccountService {
     return of(revs);
 
   }
-  /* istanbul ignore next */
+
+  // get(id?: string): Observable<Account[]> {
+  //   let acc: Account[] = [{
+  //       id:'1',
+  //       address: {
+  //           id:'1',
+  //           city:'Dallas',
+  //           country:'US',
+  //           postalCode:'12345',
+  //           stateProvince:'Texas',
+  //           street:'1234 testing st.',
+  //           unit:'24'
+  //       },
+  //       name: 'John Doe',
+  //       payments:[{
+  //           id:'1',
+  //           cardExpirationDate: new Date("7/9/21"),
+  //           cardName: 'Visa',
+  //           cardNumber: '123456789123456'
+  //       },
+  //       {
+  //           id:'2',
+  //           cardExpirationDate: new Date("1/22/21"),
+  //           cardName: 'Master',
+  //           cardNumber: '987654321987654'
+  //       },
+  //   ],
+  //       profiles:[{
+  //           id: '1',
+  //           email:'JohnDoe@gmail.com',
+  //           name: {
+  //               id:'1',
+  //               family:'Doe',
+  //               given:'John'
+  //           },
+  //           phone:'1234567891',
+  //           age:"Adult",
+  //           image: null
+  //       },
+  //       {
+  //           id: '2',
+  //           email:'JaneDoe@gmail.com',
+  //           name: {
+  //               id:'2',
+  //               family:'Doe',
+  //               given:'Jane'
+  //           },
+  //           phone:'9876543219',
+  //           age:"Adult",
+  //           image: null
+  //       }]}]
+  //       let obvAcc = of([acc.find(x=>x.id==id)]);
+  //       return obvAcc;
+  // }
+
+  /**
+   * Represents the _Account Service_ `delete` method
+   *
+   * @param id string
+   */
+  delete(id: string): Observable<boolean> {
+    return this.apiUrl$.pipe(
+      concatMap((url) => this.http.delete<boolean>(url[0], { params: { id } }))
+    );
+  }
+
+
+  deleteProf(prof:number[]): Observable<boolean>{
+    return this.apiUrl$.pipe(
+      concatMap((url) => this.http.post<boolean>(url[1], prof))
+    );
+  }
+
+  deletePay(pay:number[]): Observable<boolean>{
+    return this.apiUrl$.pipe(
+      concatMap((url) => this.http.post<boolean>(url[2], pay))
+    );
+  }
+
+  /**
+   * Represents the _Account Service_ `get` method
+   *
+   * @param id string
+   */
   get(id?: string): Observable<Account[]> {
-    let acc: Account[] = [{
-        id:'1',
-        address: {
-            id:'1',
-            city:'Dallas',
-            country:'US',
-            postalCode:'12345',
-            stateProvince:'Texas',
-            street:'1234 testing st.',
-            unit:'24'
-        },
-        name: 'John Doe',
-        payments:[{
-            id:'1',
-            cardExpirationDate: new Date("7/9/21"),
-            cardName: 'Visa',
-            cardNumber: '123456789123456'
-        },
-        {
-            id:'2',
-            cardExpirationDate: new Date("1/22/21"),
-            cardName: 'Master',
-            cardNumber: '987654321987654'
-        },
-    ],
-        profiles:[{
-            id: '1',
-            email:'JohnDoe@gmail.com',
-            name: {
-                id:'1',
-                family:'Doe',
-                given:'John'
-            },
-            phone:'1234567891',
-            age:"Adult",
-            image: null
-        },
-        {
-            id: '2',
-            email:'JaneDoe@gmail.com',
-            name: {
-                id:'2',
-                family:'Doe',
-                given:'Jane'
-            },
-            phone:'9876543219',
-            age:"Adult",
-            image: null
-        }]}]
-        let obvAcc = of([acc.find(x=>x.id==id)]);
-        return obvAcc;
+    const options = id ? { params: new HttpParams().set('id', id) } : {};
+    return this.apiUrl$.pipe(concatMap((url) => this.http.get<Account[]>(url[0], options)));
+  }
+
+  /**
+   * Represents the _Account Service_ `post` method
+   *
+   * @param account Account
+   */
+  post(account: Account): Observable<boolean> {
+    return this.apiUrl$.pipe(concatMap((url) => this.http.post<boolean>(url[0], account)));
+  }
+
+  /**
+   * Represents the _Account Service_ `put` method
+   *
+   * @param account Account
+   */
+  put(account: Account): Observable<Account> {
+    return this.apiUrl$.pipe(concatMap((url) => this.http.put<Account>(url[0], account)));
   }
 }
