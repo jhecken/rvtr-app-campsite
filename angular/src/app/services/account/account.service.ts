@@ -23,11 +23,12 @@ export class AccountService {
   constructor(private readonly config: ConfigService, private readonly http: HttpClient) {
     this.apiUrl$ = config.get().pipe(map((cfg) => cfg.api.account));
   }
-
+  
   getUserId(){
     return '1';
   }
 
+  /* istanbul ignore next */  
   getBookings(accountId?: string, limit?: number): Observable<Booking[]>{
     let books: Booking[] = [];
     let bookOne: Booking = {
@@ -105,7 +106,7 @@ export class AccountService {
 
     return of(books);
   }
-
+  /* istanbul ignore next */
   dummyGetReveiws(id: string): Observable<Review[]> {
     let revs: Review[] = [];
     let rOne: Review = {
@@ -194,6 +195,7 @@ export class AccountService {
       concatMap((url) => this.http.delete<boolean>(url[0], { params: { id } }))
     );
   }
+
 
   deleteProf(prof:number[]): Observable<boolean>{
     return this.apiUrl$.pipe(
