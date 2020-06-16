@@ -89,7 +89,6 @@ export class EditAccountComponent implements OnInit {
   }
 
   // For transferring uploaded image to base64
-
   fileChangeEvent(fileInput: any) {
     this.imageError = null;
     /* istanbul ignore next */
@@ -201,9 +200,8 @@ export class EditAccountComponent implements OnInit {
       success => console.log('success: ', this.data),
       error => console.log('error'));
     confirm('Account updated!');
-    this.router.navigateByUrl(`account/${this.data.id}`);
+    this.router.navigateByUrl(`account/${this.data.id.toString()}`);
     console.log(this.data);
-
   }
 
   constructor(private AccServ: AccountService,

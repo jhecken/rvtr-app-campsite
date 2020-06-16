@@ -37,7 +37,7 @@ export class AccountComponent implements OnInit {
   }
 
   // http get to call the most recent reviews by the account from the review service. using account id.
-  dummyGetReviews() {
+  getReviews() {
     this.AccSer.dummyGetReveiws('hi').subscribe(val => this.reviews = val);
     if (this.reviews.length >= 1) {
       for (const review of this.reviews) {
@@ -48,13 +48,13 @@ export class AccountComponent implements OnInit {
   }
 
   // http get to retrieve account information from account service using account id
-  dummyGet() {
+  getAccount() {
     const x = this.AccSer.getUserId();
     console.log(x);
     // const x = +this.route.snapshot.paramMap.get('id');
     this.AccSer.get(x).subscribe(data => {
       this.data = data[0]; this.obscure();
-      this.dummyGetReviews();
+      this.getReviews();
       this.getBookings();
       console.log(this.data.id);
     });
@@ -74,6 +74,6 @@ export class AccountComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.dummyGet();
+    this.getAccount();
   }
 }
