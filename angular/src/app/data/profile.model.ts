@@ -12,10 +12,10 @@ import { Name } from './name.model';
  */
 export interface Profile {
   id: number;
-  accountId?:number;
+  accountId?: number;
   email: string;
   name: Name;
   phone: string;
-  age: "Adult" | "Child";
+  age: 'Adult' | 'Child';
   image: string;
 }

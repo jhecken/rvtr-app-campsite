@@ -70,24 +70,24 @@ describe('AccountService', () => {
     req.flush(JSON.stringify(true));
   }));
 
-  describe('get', ()=>{
+  describe('get', () => {
 
-    it('should get all accounts', fakeAsync(()=>{
+    it('should get all accounts', fakeAsync(() => {
       let req: TestRequest;
       service.get().subscribe((res) => {
         expect(res.length).toEqual(accountMock.length);
       });
 
       tick();
-      
+
       req = httpTestingController.expectOne('t');
       req.flush(accountMock);
     }));
 
-    it('should get correct account id', fakeAsync(()=> {
+    it('should get correct account id', fakeAsync(() => {
       let reqOne: TestRequest;
 
-      service.get('0').subscribe((res)=>{
+      service.get('0').subscribe((res) => {
         expect(res[0].id).toEqual(accountMock[0].id);
       });
 
@@ -111,7 +111,7 @@ describe('AccountService', () => {
     req.flush(JSON.stringify(true));
   }));
 
-  
+
   it('should make httpPut request', fakeAsync(() => {
     let req: TestRequest;
 

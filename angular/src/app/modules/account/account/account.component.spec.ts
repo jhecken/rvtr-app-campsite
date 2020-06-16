@@ -14,8 +14,8 @@ describe('AccountComponent', () => {
   let component: AccountComponent;
   let fixture: ComponentFixture<AccountComponent>;
 
-  let mockAccountService;
-  let mockLodgingService;
+  let accountServiceMock;
+  let lodgingServiceMock;
   const activatedRouteStub = {
     snapshot: {
       paramMap: {
@@ -24,7 +24,7 @@ describe('AccountComponent', () => {
         }
       }
     }
-  }
+  };
 
   let mockAccount: Account[];
   let mockReviews: Review[];
@@ -32,14 +32,14 @@ describe('AccountComponent', () => {
   let mockLodging: Lodging[];
 
   beforeEach(async(() => {
-    mockAccountService = jasmine.createSpyObj(['get', 'getBookings', 'dummyGetReveiws', 'getUserId']);
-    mockLodgingService = jasmine.createSpyObj(['get']);
+    accountServiceMock = jasmine.createSpyObj(['get', 'getBookings', 'dummyGetReveiws', 'getUserId']);
+    lodgingServiceMock = jasmine.createSpyObj(['get']);
 
     TestBed.configureTestingModule({
       declarations: [AccountComponent],
       providers: [
-        { provide: AccountService, useValue: mockAccountService },
-        { provide: LodgingService, useValue: mockLodgingService },
+        { provide: AccountService, useValue: accountServiceMock },
+        { provide: LodgingService, useValue: lodgingServiceMock },
         { provide: ActivatedRoute, useValue: activatedRouteStub }
       ],
       schemas: [NO_ERRORS_SCHEMA]
@@ -63,13 +63,13 @@ describe('AccountComponent', () => {
       name: 'John Doe',
       payments: [{
         id: 1,
-        cardExpirationDate: new Date("7/9/21"),
+        cardExpirationDate: new Date('7/9/21'),
         cardName: 'Visa',
         cardNumber: '123456789123456'
       },
       {
         id: 2,
-        cardExpirationDate: new Date("1/22/21"),
+        cardExpirationDate: new Date('1/22/21'),
         cardName: 'Master',
         cardNumber: '987654321987654'
       },
@@ -83,7 +83,7 @@ describe('AccountComponent', () => {
           given: 'John'
         },
         phone: '1234567891',
-        age: "Adult",
+        age: 'Adult',
         image: null
       },
       {
@@ -95,31 +95,31 @@ describe('AccountComponent', () => {
           given: 'Jane'
         },
         phone: '9876543219',
-        age: "Adult",
+        age: 'Adult',
         image: null
       }]
     }];
     mockReviews = [
       {
-        id: "1",
-        accountId: "1",
-        hotelId: "1",
-        comment: "good stuff man",
-        dateCreated: new Date("6/10/2020"),
+        id: '1',
+        accountId: '1',
+        hotelId: '1',
+        comment: 'good stuff man',
+        dateCreated: new Date('6/10/2020'),
         rating: 4
       }
     ];
     mockBookings = [
       {
-        id: "1",
-        accountId: "1",
-        lodgingId: "1",
+        id: '1',
+        accountId: '1',
+        lodgingId: '1',
         guests: null,
         rentals: null,
         stay: {
-          id: "1",
-          checkIn: new Date("1/10/2020"),
-          checkOut: new Date("1/15/2020"),
+          id: '1',
+          checkIn: new Date('1/10/2020'),
+          checkOut: new Date('1/15/2020'),
           dateCreated: null,
           dateModified: null
         },
@@ -128,7 +128,7 @@ describe('AccountComponent', () => {
     ];
     mockLodging = [
       {
-        id: "1",
+        id: '1',
         location: null,
         name: 'name',
         rentals: [],
@@ -138,31 +138,31 @@ describe('AccountComponent', () => {
   });
 
   it('should create', () => {
-    mockAccountService.get.and.returnValue(of(mockAccount));
-    mockAccountService.dummyGetReveiws.and.returnValue(of(mockReviews));
-    mockAccountService.getBookings.and.returnValue(of(mockBookings));
-    mockAccountService.getUserId.and.returnValue(1);
+    accountServiceMock.get.and.returnValue(of(mockAccount));
+    accountServiceMock.dummyGetReveiws.and.returnValue(of(mockReviews));
+    accountServiceMock.getBookings.and.returnValue(of(mockBookings));
+    accountServiceMock.getUserId.and.returnValue(1);
 
-    mockLodgingService.get.and.returnValue(of(mockLodging));
+    lodgingServiceMock.get.and.returnValue(of(mockLodging));
 
     fixture.detectChanges();
 
     expect(component).toBeTruthy();
   });
-  
-  it('shouldnt call lodging service if 0 reviews and bookings', () => {
+
+  it('should not call lodging service if 0 reviews and bookings', () => {
       mockReviews = [];
       mockBookings = [];
 
-      mockAccountService.get.and.returnValue(of(mockAccount));
-      mockAccountService.dummyGetReveiws.and.returnValue(of(mockReviews));
-      mockAccountService.getBookings.and.returnValue(of(mockBookings));
-      mockAccountService.getUserId.and.returnValue(1);
-  
-      mockLodgingService.get.and.returnValue(of(mockLodging));
-  
+      accountServiceMock.get.and.returnValue(of(mockAccount));
+      accountServiceMock.dummyGetReveiws.and.returnValue(of(mockReviews));
+      accountServiceMock.getBookings.and.returnValue(of(mockBookings));
+      accountServiceMock.getUserId.and.returnValue(1);
+
+      lodgingServiceMock.get.and.returnValue(of(mockLodging));
+
       fixture.detectChanges();
 
-      expect(mockLodgingService.get).toHaveBeenCalledTimes(0);
+      expect(lodgingServiceMock.get).toHaveBeenCalledTimes(0);
   });
 });

@@ -7,7 +7,7 @@ import { AccountComponent } from './account/account.component';
 
 
 @NgModule({
-  declarations: [AccountComponent,EditAccountComponent],
+  declarations: [AccountComponent, EditAccountComponent],
   imports: [
     AccountRoutingModule, FormsModule, CommonModule
   ]
