@@ -62,23 +62,23 @@ describe('AccountComponent', () => {
       },
       name: 'John Doe',
       payments: [{
-        id: '1',
+        id: 1,
         cardExpirationDate: new Date("7/9/21"),
         cardName: 'Visa',
         cardNumber: '123456789123456'
       },
       {
-        id: '2',
+        id: 2,
         cardExpirationDate: new Date("1/22/21"),
         cardName: 'Master',
         cardNumber: '987654321987654'
       },
       ],
       profiles: [{
-        id: '1',
+        id: 1,
         email: 'JohnDoe@gmail.com',
         name: {
-          id: '1',
+          id: 1,
           family: 'Doe',
           given: 'John'
         },
@@ -87,10 +87,10 @@ describe('AccountComponent', () => {
         image: null
       },
       {
-        id: '2',
+        id: 2,
         email: 'JaneDoe@gmail.com',
         name: {
-          id: '2',
+          id: 2,
           family: 'Doe',
           given: 'Jane'
         },
