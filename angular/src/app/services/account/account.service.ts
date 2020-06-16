@@ -39,19 +39,6 @@ export class AccountService {
     );
   }
 
-
-  deleteProf(prof: number[]): Observable<boolean>{
-    return this.apiUrl$.pipe(
-      concatMap((url) => this.http.post<boolean>(url[1], prof))
-    );
-  }
-
-  deletePay(pay: number[]): Observable<boolean>{
-    return this.apiUrl$.pipe(
-      concatMap((url) => this.http.post<boolean>(url[2], pay))
-    );
-  }
-
   /**
    * Represents the _Account Service_ `get` method
    *
@@ -80,7 +67,7 @@ export class AccountService {
     return this.apiUrl$.pipe(concatMap((url) => this.http.put<Account>(url[0], account)));
   }
   /* istanbul ignore next */
-  getBookings(accountId?: string, limit?: number): Observable<Booking[]>{
+  getBookings(accountIds?: string, limit?: number): Observable<Booking[]>{
     let books: Booking[] = [];
     const bookOne: Booking = {
       id: '1',
@@ -148,7 +135,7 @@ export class AccountService {
     books.push(bookFour);
 
     // Represents server side sorting, filtering
-    books = books.filter(booking => booking.accountId === accountId).sort((a, b) => Number(b.id) - Number(a.id));
+    books = books.filter(booking => booking.accountId === accountIds).sort((a, b) => Number(b.id) - Number(a.id));
     // const options = id ? { params: new HttpParams().set('id', id) } : {};
     // options.params.set('limit', limit.toString());
     // options.params.set('accountId', accountId)

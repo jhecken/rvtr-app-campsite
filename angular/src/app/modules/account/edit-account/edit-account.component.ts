@@ -84,10 +84,6 @@ export class EditAccountComponent implements OnInit {
 
   // remove a payment card from arrays of payments in the data:Account property
   removeCard(card) {
-    if (this.paymentsDb.find(x => x.cardNumber === card.cardNumber)) {
-      this.removePaymentsDb.push(card.id);
-      console.log(this.removePaymentsDb);
-    }
     this.data.payments
       .splice(this.data.payments.indexOf(card), 1);
   }
@@ -179,11 +175,6 @@ export class EditAccountComponent implements OnInit {
 
   // remove a profile from array of profiles in the data:Account property
   removeProfile(profile) {
-    if (this.profilesDb.find(x => x.id === profile.id)) {
-      this.removeProfilesDb.push(profile.id);
-      console.log(this.profilesDb);
-    }
-    this.removeProfilesDb.push(profile);
     this.data.profiles
       .splice(this.data.profiles.indexOf(profile), 1);
   }
@@ -191,11 +182,9 @@ export class EditAccountComponent implements OnInit {
   // http get from account service to obtain all the information of an account based on account id
   get() {
     const x = +this.route.snapshot.paramMap.get('id');
-    this.AccServ.get(x.toString()).subscribe(data => {
-      this.data = data[0];
-      this.paymentsDb = data[0].payments;
-      this.profilesDb = data[0].profiles;
-    });
+    this.AccServ.get(x.toString()).subscribe(data =>
+      this.data = data[0]
+    );
   }
 
   // http put from account service to update account information, validation is very ugly
@@ -208,19 +197,11 @@ export class EditAccountComponent implements OnInit {
       return console.log('there was an error');
     }
 
-    this.AccServ.deleteProf(this.removeProfilesDb).subscribe(
-      success => console.log('success: ', this.removeProfilesDb),
-      error => console.log('error'));
-
-    this.AccServ.deletePay(this.removePaymentsDb).subscribe(
-      success => console.log('success: ', this.removePaymentsDb),
-      error => console.log('error'));
-
     this.AccServ.put(this.data).subscribe(
       success => console.log('success: ', this.data),
       error => console.log('error'));
     confirm('Account updated!');
-    this.router.navigateByUrl('account/1');
+    this.router.navigateByUrl(`account/${this.data.id}`);
     console.log(this.data);
 
   }
