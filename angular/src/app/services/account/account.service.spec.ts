@@ -66,41 +66,36 @@ describe('AccountService', () => {
 
     tick();
 
-    req = httpTestingController.expectOne('test?id=0');
+    req = httpTestingController.expectOne('t?id=0');
     req.flush(JSON.stringify(true));
   }));
 
   describe('get', ()=>{
 
-    xit('should make httpGet request', fakeAsync(()=>{
-
+    it('should get all accounts', fakeAsync(()=>{
       let req: TestRequest;
-      let reqOne: TestRequest;
-  
-      tick();
-
-      req = httpTestingController.expectOne('test');
-      reqOne = httpTestingController.expectOne('test?id=0');
-  
-      req.flush(accountMock);
-      reqOne.flush(accountMock);
-
-    }));
-
-    it('should get all accounts', ()=>{
       service.get().subscribe((res) => {
         expect(res.length).toEqual(accountMock.length);
       });
-    });
 
-    it('should get correct account id', ()=> {
+      tick();
+      
+      req = httpTestingController.expectOne('t');
+      req.flush(accountMock);
+    }));
 
-      service.get('1').subscribe((res)=>{
+    it('should get correct account id', fakeAsync(()=> {
+      let reqOne: TestRequest;
+
+      service.get('0').subscribe((res)=>{
         expect(res[0].id).toEqual(accountMock[0].id);
       });
 
-    });
+      tick();
 
+      reqOne = httpTestingController.expectOne('t?id=0');
+      reqOne.flush(accountMock);
+    }));
   });
 
   it('should make httpPost request', fakeAsync(() => {
@@ -112,7 +107,7 @@ describe('AccountService', () => {
 
     tick();
 
-    req = httpTestingController.expectOne('test');
+    req = httpTestingController.expectOne('t');
     req.flush(JSON.stringify(true));
   }));
 
@@ -126,7 +121,7 @@ describe('AccountService', () => {
 
     tick();
 
-    req = httpTestingController.expectOne('test');
+    req = httpTestingController.expectOne('t');
     req.flush(accountMock[0]);
   }));
 });

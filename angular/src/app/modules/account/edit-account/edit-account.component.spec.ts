@@ -32,7 +32,7 @@ describe('EditAccountComponent', () => {
   }
 
   beforeEach(async(() => {
-    mockAccountService = jasmine.createSpyObj(['get', 'put']);
+    mockAccountService = jasmine.createSpyObj(['get', 'put', 'deletePay', 'deleteProf']);
 
     TestBed.configureTestingModule({
       declarations: [EditAccountComponent],
@@ -273,6 +273,8 @@ describe('EditAccountComponent', () => {
     it('should call put on AccountService with valid account', () =>{
       mockAccountService.get.and.returnValue(of(mockAccount));
       mockAccountService.put.and.returnValue(of(mockAccount));
+      mockAccountService.deleteProf.and.returnValue(of(true));
+      mockAccountService.deletePay.and.returnValue(of(true));
       fixture.detectChanges();
 
       component.onSubmit();
