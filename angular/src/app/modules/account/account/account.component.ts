@@ -27,10 +27,10 @@ export class AccountComponent implements OnInit {
   // http get to call the most recent booking information from the booking service.
   // Bookings will be sorted on the API end. using account id.
   getBookings() {
-    this.AccSer.getBookings(this.data.id.toString()).pipe(map(bookings => bookings.slice(0, 2))).subscribe(books => this.bookings = books);
+    this.accountService.getBookings(this.data.id.toString()).pipe(map(bookings => bookings.slice(0, 2))).subscribe(books => this.bookings = books);
     if (this.bookings.length >= 1) {
       for (const booking of this.bookings){
-        this.LodgServ.get(booking.lodgingId.toString())
+        this.lodgingService.get(booking.lodgingId.toString())
           .subscribe(lodge => this.bookingLocations.push(lodge[0].name));
       }
     }
@@ -38,10 +38,10 @@ export class AccountComponent implements OnInit {
 
   // http get to call the most recent reviews by the account from the review service. using account id.
   getReviews() {
-    this.AccSer.dummyGetReveiws('hi').subscribe(val => this.reviews = val);
+    this.accountService.dummyGetReveiws('hi').subscribe(val => this.reviews = val);
     if (this.reviews.length >= 1) {
       for (const review of this.reviews) {
-        this.LodgServ.get(review.hotelId.toString())
+        this.lodgingService.get(review.hotelId.toString())
           .subscribe(lodge => this.reviewLocations.push(lodge[0].name));
       }
     }
@@ -49,27 +49,26 @@ export class AccountComponent implements OnInit {
 
   // http get to retrieve account information from account service using account id
   getAccount() {
-    const x = this.AccSer.getUserId();
-    console.log(x);
+    const x = this.accountService.getUserId();
     // const x = +this.route.snapshot.paramMap.get('id');
-    this.AccSer.get(x).subscribe(data => {
-      this.data = data[0]; this.obscure();
+    this.accountService.get(x).subscribe(data => {
+      this.data = data[0]; 
+      this.obscure();
       this.getReviews();
       this.getBookings();
-      console.log(this.data.id);
     });
   }
 
   // hashing the credit card number displayed.
   obscure() {
-    for (let i = 0; i < this.data.payments.length; i++) {
-      this.data.payments[i].cardNumber = '***********' + this.data.payments[i].cardNumber.substring(11, 16);
+    for(let payment of this.data.payments){
+      payment.cardNumber = '***********' + payment.cardNumber.substring(11, 16);
     }
   }
 
-  constructor(private AccSer: AccountService,
-              private route: ActivatedRoute,
-              private LodgServ: LodgingService,
+  constructor(private accountService: AccountService,
+              private activatedRoute: ActivatedRoute,
+              private lodgingService: LodgingService,
   ) { }
 
   ngOnInit(): void {
