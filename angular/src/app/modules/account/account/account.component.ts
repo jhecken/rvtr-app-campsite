@@ -48,6 +48,7 @@ export class AccountComponent implements OnInit {
   }
 
   // http get to retrieve account information from account service using account id
+  
   dummyGet() {
     const x = this.AccSer.getUserId();
     console.log(x);
@@ -62,7 +63,6 @@ export class AccountComponent implements OnInit {
 
   // hashing the credit card number displayed.
   obscure() {
-    // tslint:disable-next-line
     for (let i = 0; i < this.data.payments.length; i++) {
       this.data.payments[i].cardNumber = '***********' + this.data.payments[i].cardNumber.substring(11, 16);
     }
