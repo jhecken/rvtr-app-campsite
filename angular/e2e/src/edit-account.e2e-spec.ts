@@ -32,7 +32,7 @@ describe('project rvtr-app-campsite', () => {
             .toEqual('Visa');
     });
 
-    it('should change postal code', () => {
+    xit('should change postal code', () => {
 
         page.navigateToEditAccount();
         const postalCode = element(by.id('postal-code'));
