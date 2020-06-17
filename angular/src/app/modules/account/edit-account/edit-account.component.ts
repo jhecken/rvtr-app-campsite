@@ -99,8 +99,7 @@ export class EditAccountComponent implements OnInit {
       const maxWidth = 25600;
 
       if (fileInput.target.files[0].size > maxSize) {
-        this.imageError =
-          'Maximum size allowed is ' + maxSize / 1000 + 'Mb';
+        this.imageError = `Maximum size allowed is ${maxSize / 1000} + Mb`;
 
         return false;
       }
@@ -172,8 +171,8 @@ export class EditAccountComponent implements OnInit {
 
   // http get from account service to obtain all the information of an account based on account id
   get() {
-    const x = +this.route.snapshot.paramMap.get('id');
-    this.AccServ.get(x.toString()).subscribe(data =>
+    const x = +this.activatedRoute.snapshot.paramMap.get('id');
+    this.accountService.get(x.toString()).subscribe(data =>
       this.data = data[0]
     );
   }
@@ -185,20 +184,18 @@ export class EditAccountComponent implements OnInit {
       this.isNullOrWhitespace(this.data.address.postalCode) || this.isNullOrWhitespace(this.data.address.country) ||
       this.data.payments.length <= 0 || this.data.profiles.length <= 0) {
       confirm('Please fill all the information and have at least one payment and profile before you update');
-      return console.log('there was an error');
     }
 
-    this.AccServ.put(this.data).subscribe(
+    this.accountService.put(this.data).subscribe(
       success => console.log('success: ', this.data),
       error => console.log('error'));
     confirm('Account updated!');
     this.router.navigateByUrl(`account/${this.data.id.toString()}`);
-    console.log(this.data);
   }
 
-  constructor(private AccServ: AccountService,
-              private route: ActivatedRoute,
-              private router: Router
+  constructor(private readonly accountService: AccountService,
+              private readonly activatedRoute: ActivatedRoute,
+              private readonly router: Router
   ) { }
 
   ngOnInit(): void {
