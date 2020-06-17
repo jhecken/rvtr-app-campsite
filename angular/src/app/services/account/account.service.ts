@@ -6,7 +6,6 @@ import { ConfigService } from '../config/config.service';
 import { Account } from '../../data/account.model';
 import { Review } from '../../data/review.model';
 import { Booking } from '../../data/booking.model';
-import { Profile } from 'src/app/data/profile.model';
 
 @Injectable({
   providedIn: 'root',
