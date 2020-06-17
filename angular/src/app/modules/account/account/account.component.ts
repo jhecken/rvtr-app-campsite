@@ -4,11 +4,9 @@ import { Account } from '../../../data/account.model';
 import { Review } from '../../../data/review.model';
 import { Booking } from '../../../data/booking.model';
 import { ActivatedRoute } from '@angular/router';
-import { Lodging } from 'src/app/data/lodging.model';
 import { LodgingService } from 'src/app/services/lodging/lodging.service';
 
 import { map } from 'rxjs/operators';
-import { of } from 'rxjs';
 
 
 @Component({
@@ -49,9 +47,9 @@ export class AccountComponent implements OnInit {
 
   // http get to retrieve account information from account service using account id
   getAccount() {
-    const x = this.accountService.getUserId();
-    // const x = +this.route.snapshot.paramMap.get('id');
-    this.accountService.get(x).subscribe(data => {
+    const userId = this.accountService.getUserId();
+    // const userId = +this.route.snapshot.paramMap.get('id');
+    this.accountService.get(userId).subscribe(data => {
       this.data = data[0]; 
       this.obscure();
       this.getReviews();
@@ -62,13 +60,13 @@ export class AccountComponent implements OnInit {
   // hashing the credit card number displayed.
   obscure() {
     for(let payment of this.data.payments){
-      payment.cardNumber = '***********' + payment.cardNumber.substring(11, 16);
+      payment.cardNumber = `***********${payment.cardNumber.substring(11, 16)}`;
     }
   }
 
-  constructor(private accountService: AccountService,
-              private activatedRoute: ActivatedRoute,
-              private lodgingService: LodgingService,
+  constructor(private readonly accountService: AccountService,
+              private readonly activatedRoute: ActivatedRoute,
+              private readonly lodgingService: LodgingService,
   ) { }
 
   ngOnInit(): void {
