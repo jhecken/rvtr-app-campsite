@@ -21,7 +21,7 @@ describe('project rvtr-app-campsite', () => {
     it('should route to account edit page', () => {
         page.navigateToAccount();
         page.clickEditButton();
-        expect(page.getUpdateButton()).toContain('Add');
+        expect(page.getUpdateButton()).toContain('Edit');
     });
 
     afterEach(async () => {
