@@ -91,7 +91,6 @@ export class EditAccountComponent implements OnInit {
   // For transferring uploaded image to base64
   fileChangeEvent(fileInput: any) {
     this.imageError = null;
-    /* istanbul ignore next */
     if (fileInput.target.files && fileInput.target.files[0]) {
       // Size Filter Bytes
       const maxSize = 20971520;
@@ -115,20 +114,13 @@ export class EditAccountComponent implements OnInit {
         const image = new Image();
         image.src = e.target.result;
         image.onload = rs => {
-          // tslint:disable-next-line
           const imgHeight = rs.currentTarget['height'];
-          // tslint:disable-next-line
           const imgWidth = rs.currentTarget['width'];
 
           console.log(imgHeight, imgWidth);
 
           if (imgHeight > maxHeight && imgWidth > maxWidth) {
-            this.imageError =
-              'Maximum dimentions allowed ' +
-              maxHeight +
-              '*' +
-              maxWidth +
-              'px';
+            this.imageError = `Maximum dimensions allowed: ${maxHeight} * ${maxWidth}px`;
             return false;
           } else {
             const imgBase64Path = e.target.result;
