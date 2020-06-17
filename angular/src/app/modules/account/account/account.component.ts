@@ -38,7 +38,7 @@ export class AccountComponent implements OnInit {
 
   // http get to call the most recent reviews by the account from the review service. using account id.
   getReviews() {
-    this.accountService.dummyGetReveiws('hi').subscribe(val => this.reviews = val);
+    this.accountService.dummyGetReviews('hi').subscribe(val => this.reviews = val);
     if (this.reviews.length >= 1) {
       for (const review of this.reviews) {
         this.lodgingService.get(review.hotelId.toString())
