@@ -143,7 +143,7 @@ export class AccountService {
     return of(books);
   }
   /* istanbul ignore next */
-  dummyGetReveiws(id: string): Observable<Review[]> {
+  dummyGetReviews(id: string): Observable<Review[]> {
     const revs: Review[] = [];
     const rOne: Review = {
       id: '1',
