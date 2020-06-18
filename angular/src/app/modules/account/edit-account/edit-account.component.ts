@@ -33,18 +33,6 @@ export class EditAccountComponent implements OnInit {
     payments: [],
     profiles: []
   };
-  profile: Profile = {
-    id: 0,
-    email: null,
-    phone: null,
-    age: 'Adult',
-    name: {
-      id: 0,
-      family: null,
-      given: null
-    },
-    image: null
-  };
   imageError: string;
   isImageSaved: boolean;
   cardImageBase64: string;
