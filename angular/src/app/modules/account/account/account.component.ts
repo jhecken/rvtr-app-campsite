@@ -22,10 +22,13 @@ export class AccountComponent implements OnInit {
   reviewLocations: string[] = [];
 
   // functions
-  // http get to call the most recent booking information from the booking service.
+  // http get to call the most 2 recent bookings information from the booking service.
+  // The 2 listings serve as a quick snapshot accessible from the account dashboard.
   // Bookings will be sorted on the API end. using account id.
   getBookings() {
-    this.accountService.getBookings(this.data.id.toString()).pipe(map(bookings => bookings.slice(0, 2))).subscribe(books => this.bookings = books);
+    this.accountService.getBookings(this.data.id.toString())
+                       .pipe(map(bookings => bookings.slice(0, 2)))
+                       .subscribe(books => this.bookings = books);
     if (this.bookings.length >= 1) {
       for (const booking of this.bookings){
         this.lodgingService.get(booking.lodgingId.toString())
@@ -50,7 +53,7 @@ export class AccountComponent implements OnInit {
     const userId = this.accountService.getUserId();
     // const userId = +this.route.snapshot.paramMap.get('id');
     this.accountService.get(userId).subscribe(data => {
-      this.data = data[0]; 
+      this.data = data[0];
       this.obscure();
       this.getReviews();
       this.getBookings();
@@ -59,7 +62,7 @@ export class AccountComponent implements OnInit {
 
   // hashing the credit card number displayed.
   obscure() {
-    for(let payment of this.data.payments){
+    for (const payment of this.data.payments) {
       payment.cardNumber = `***********${payment.cardNumber.substring(11, 16)}`;
     }
   }

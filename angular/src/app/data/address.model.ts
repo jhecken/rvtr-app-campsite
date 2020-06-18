@@ -8,6 +8,7 @@
  * postalCode: string;
  * stateProvince: string;
  * street: string;
+ * unit: string;
  * ```
  */
 export interface Address {

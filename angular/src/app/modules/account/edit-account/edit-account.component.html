@@ -11,21 +11,21 @@
                 <h2 class="title has-text-light is-4">name</h2>
                 <input class="title has-text-dark is-4" [(ngModel)]="data.name" name="name">
               </div>
-              <div class="tile box has-background-dark is-child">
+              <div class="tile box has-background-dark is-child" *ngIf="data.address">
                 <h2 class="title has-text-light is-4">address</h2>
                 <div class="level">
                   <div class="level-left">
                     <div class="level-item has-text-light">
                       <div>
                         <p class="heading">street</p>
-                        <input class="has-text-dark is-6" *ngIf="data.address!=null" [(ngModel)]="data.address.street"
+                        <input class="has-text-dark is-6" [(ngModel)]="data.address.street"
                           name="street">
                       </div>
                     </div>
                     <div class="level-item has-text-light">
                       <div>
                         <p class="heading">apt / unit</p>
-                        <input class="has-text-dark is-6" *ngIf="data.address!=null" [(ngModel)]="data.address.unit"
+                        <input class="has-text-dark is-6" [(ngModel)]="data.address.unit"
                           name="unit">
                       </div>
                     </div>
@@ -36,21 +36,21 @@
                     <div class="level-item has-text-light">
                       <div>
                         <p class="heading">city</p>
-                        <input class="has-text-dark is-6" *ngIf="data.address!=null" [(ngModel)]="data.address.city"
+                        <input class="has-text-dark is-6" [(ngModel)]="data.address.city"
                           name="city">
                       </div>
                     </div>
                     <div class="level-item has-text-light">
                       <div>
                         <p class="heading">state</p>
-                        <input class="has-text-dark is-6" *ngIf="data.address!=null"
+                        <input class="has-text-dark is-6"
                           [(ngModel)]="data.address.stateProvince" name="state">
                       </div>
                     </div>
                     <div class="level-item has-text-light">
                       <div>
                         <p class="heading">Postal Code</p>
-                        <input class="has-text-dark is-6 tile" id="postal-code" *ngIf="data.address!=null"
+                        <input class="has-text-dark is-6 tile" id="postal-code"
                           [(ngModel)]="data.address.postalCode" name="zip">
                       </div>
                     </div>
@@ -61,7 +61,7 @@
                     <div class="level-item has-text-light">
                       <div>
                         <p class="heading">country</p>
-                        <input class="has-text-dark is-6" *ngIf="data.address!=null" [(ngModel)]="data.address.country"
+                        <input class="has-text-dark is-6" [(ngModel)]="data.address.country"
                           name="country">
                       </div>
                     </div>
