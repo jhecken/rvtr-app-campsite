@@ -11,7 +11,9 @@ import { Booking } from '../../data/booking.model';
   providedIn: 'root',
 })
 export class AccountService {
-  private readonly apiUrl$: Observable<string>;
+  private readonly accountUrl$: Observable<string>;
+  private readonly paymentUrl$: Observable<string>;
+  private readonly profileUrl$: Observable<string>;
 
   /**
    * Represents the _Account Service_ `constructor` method
@@ -20,7 +22,9 @@ export class AccountService {
    * @param http HttpClient
    */
   constructor(private readonly config: ConfigService, private readonly http: HttpClient) {
-    this.apiUrl$ = config.get().pipe(map((cfg) => cfg.api.account));
+    this.accountUrl$ = config.get().pipe(map((cfg) => cfg.api.account.base + cfg.api.account.uri.account));
+    this.paymentUrl$ = config.get().pipe(map((cfg) => cfg.api.account.base + cfg.api.account.uri.payment));
+    this.profileUrl$ = config.get().pipe(map((cfg) => cfg.api.account.base + cfg.api.account.uri.profile));
   }
 
   getUserId(){
@@ -33,8 +37,8 @@ export class AccountService {
    * @param id string
    */
   delete(id: string): Observable<boolean> {
-    return this.apiUrl$.pipe(
-      concatMap((url) => this.http.delete<boolean>(url[0], { params: { id } }))
+    return this.accountUrl$.pipe(
+      concatMap((url) => this.http.delete<boolean>(url, { params: { id } }))
     );
   }
 
@@ -45,7 +49,7 @@ export class AccountService {
    */
   get(id?: string): Observable<Account[]> {
     const options = id ? { params: new HttpParams().set('id', id) } : {};
-    return this.apiUrl$.pipe(concatMap((url) => this.http.get<Account[]>(url[0], options)));
+    return this.accountUrl$.pipe(concatMap((url) => this.http.get<Account[]>(url, options)));
   }
 
   /**
@@ -54,7 +58,7 @@ export class AccountService {
    * @param account Account
    */
   post(account: Account): Observable<boolean> {
-    return this.apiUrl$.pipe(concatMap((url) => this.http.post<boolean>(url[0], account)));
+    return this.accountUrl$.pipe(concatMap((url) => this.http.post<boolean>(url, account)));
   }
 
   /**
@@ -63,7 +67,7 @@ export class AccountService {
    * @param account Account
    */
   put(account: Account): Observable<Account> {
-    return this.apiUrl$.pipe(concatMap((url) => this.http.put<Account>(url[0], account)));
+    return this.accountUrl$.pipe(concatMap((url) => this.http.put<Account>(url, account)));
   }
   /* istanbul ignore next */
   getBookings(accountIds?: string, limit?: number): Observable<Booking[]>{
@@ -72,6 +76,7 @@ export class AccountService {
       id: '1',
       accountId: '1',
       lodgingId: '1',
+      lodging: null,
       guests: null,
       rentals: null,
       stay: {
@@ -87,6 +92,7 @@ export class AccountService {
       id: '2',
       accountId: '1',
       lodgingId: '2',
+      lodging: null,
       guests: null,
       rentals: null,
       stay: {
@@ -102,6 +108,7 @@ export class AccountService {
       id: '3',
       accountId: '2',
       lodgingId: '3',
+      lodging: null,
       guests: null,
       rentals: null,
       stay: {
@@ -117,6 +124,7 @@ export class AccountService {
       id: '4',
       accountId: '1',
       lodgingId: '4',
+      lodging: null,
       guests: null,
       rentals: null,
       stay: {
@@ -142,12 +150,19 @@ export class AccountService {
     return of(books);
   }
   /* istanbul ignore next */
-  dummyGetReviews(id: string): Observable<Review[]> {
+  getReviews(id: string): Observable<Review[]> {
     const revs: Review[] = [];
     const rOne: Review = {
       id: '1',
       accountId: '1',
-      hotelId: '1',
+      lodgingId: '1',
+      lodging: {
+        id: null,
+        location: null,
+        name: 'Hilton',
+        rentals: null,
+        reviews: null
+      },
       comment: 'good stuff man',
       dateCreated: new Date('6/10/2020'),
       rating: 4
@@ -156,7 +171,14 @@ export class AccountService {
     const rTwo: Review = {
       id: '2',
       accountId: '1',
-      hotelId: '2',
+      lodgingId: '2',
+      lodging: {
+        id: null,
+        location: null,
+        name: 'Marriot',
+        rentals: null,
+        reviews: null
+      },
       comment: 'super bad',
       dateCreated: new Date('6/10/2020'),
       rating: 1
