@@ -33,6 +33,18 @@ export class EditAccountComponent implements OnInit {
     payments: [],
     profiles: []
   };
+  profile: Profile = {
+    id: 0,
+    email: null,
+    phone: null,
+    age: 'Adult',
+    name: {
+      id: 0,
+      family: null,
+      given: null
+    },
+    image: null
+  };
   imageError: string;
   isImageSaved: boolean;
   cardImageBase64: string;
@@ -113,8 +125,10 @@ export class EditAccountComponent implements OnInit {
         const image = new Image();
         image.src = e.target.result;
         image.onload = rs => {
-          const imgHeight = rs.currentTarget['height'];
-          const imgWidth = rs.currentTarget['width'];
+          const height = 'height';
+          const width = 'width';
+          const imgHeight = rs.currentTarget[height];
+          const imgWidth = rs.currentTarget[width];
 
           console.log(imgHeight, imgWidth);
 
@@ -184,13 +198,15 @@ export class EditAccountComponent implements OnInit {
       this.isNullOrWhitespace(this.data.address.postalCode) || this.isNullOrWhitespace(this.data.address.country) ||
       this.data.payments.length <= 0 || this.data.profiles.length <= 0) {
       confirm('Please fill all the information and have at least one payment and profile before you update');
+    } else {
+      this.accountService.put(this.data).subscribe(
+        success => {
+          console.log('success: ', this.data);
+          confirm('Account updated!');
+          this.router.navigateByUrl(`account/${this.data.id.toString()}`);
+        },
+        error => console.log('error'));
     }
-
-    this.accountService.put(this.data).subscribe(
-      success => console.log('success: ', this.data),
-      error => console.log('error'));
-    confirm('Account updated!');
-    this.router.navigateByUrl(`account/${this.data.id.toString()}`);
   }
 
   constructor(private readonly accountService: AccountService,
