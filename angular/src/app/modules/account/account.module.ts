@@ -4,10 +4,11 @@ import { AccountRoutingModule } from './account-routing.module';
 import { FormsModule } from '@angular/forms';
 import { EditAccountComponent } from './edit-account/edit-account.component';
 import { AccountComponent } from './account/account.component';
+import { DemoComponent } from './demo/demo.component';
 
 
 @NgModule({
-  declarations: [AccountComponent, EditAccountComponent],
+  declarations: [AccountComponent, EditAccountComponent, DemoComponent],
   imports: [
     AccountRoutingModule, FormsModule, CommonModule
   ]

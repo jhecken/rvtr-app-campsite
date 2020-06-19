@@ -7,6 +7,8 @@ import { Account } from '../../data/account.model';
 import { Review } from '../../data/review.model';
 import { Booking } from '../../data/booking.model';
 
+import * as _ from 'lodash';
+
 @Injectable({
   providedIn: 'root',
 })
@@ -27,7 +29,7 @@ export class AccountService {
     this.profileUrl$ = config.get().pipe(map((cfg) => cfg.api.account.base + cfg.api.account.uri.profile));
   }
 
-  getUserId(){
+  getUserId() {
     return '1';
   }
 
@@ -70,7 +72,7 @@ export class AccountService {
     return this.accountUrl$.pipe(concatMap((url) => this.http.put<Account>(url, account)));
   }
   /* istanbul ignore next */
-  getBookings(accountIds?: string, limit?: number): Observable<Booking[]>{
+  getBookings(accountIds?: string, limit?: number): Observable<Booking[]> {
     let books: Booking[] = [];
     const bookOne: Booking = {
       id: '1',
@@ -185,5 +187,81 @@ export class AccountService {
     };
     revs.push(rTwo);
     return of(revs);
+  }
+
+  // Accepts a file and attempts to resolve it to an image and convert it to a Base64 string.
+  validateImage(fileInput: any): any {
+    // If the input contains files..
+    if (fileInput.target.files && fileInput.target.files[0]) {
+      // Size Filter Bytes
+      const maxSize = 20971520;
+      const allowedTypes = ['image/png', 'image/jpeg'];
+      const maxHeight = 15200;
+      const maxWidth = 25600;
+      let imageError = null;
+
+      // If the input file is greater than the maximum size, return an error message
+      if (fileInput.target.files[0].size > maxSize) {
+        imageError = `Maximum size allowed is ${maxSize / 1000} + Mb`;
+        return { valid: false, message: imageError };
+      }
+
+      // If the input file is not one of the allowed file formats, return an error message
+      if (!_.includes(allowedTypes, fileInput.target.files[0].type)) {
+        imageError = 'Only Images are allowed ( JPG | PNG )';
+        return { valid: false, message: imageError };
+      }
+
+      // FileReader onload occurs asynchronously, so we resolve the following results as promises
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = (e: any) => {
+          const image = new Image();
+          image.src = e.target.result;
+          image.onload = rs => {
+            const height = 'height';
+            const width = 'width';
+            const imgHeight = rs.currentTarget[height];
+            const imgWidth = rs.currentTarget[width];
+
+            // If the input file dimesions are too large, return an error message
+            if (imgHeight > maxHeight && imgWidth > maxWidth) {
+              imageError = `Maximum dimensions allowed: ${maxHeight} * ${maxWidth}px`;
+              return { valid: false, message: imageError };
+            }
+            // Otherwise, the file is a valid image, and the Base64 string is returned
+            else {
+              const imgBase64Path = e.target.result;
+              resolve({ valid: true, message: imgBase64Path });
+            }
+          };
+        };
+        reader.onerror = (e: any) => {
+          reject(e);
+        };
+        reader.readAsDataURL(fileInput.target.files[0]);
+      });
+    }
+  }
+
+  // Credit card validation function, checks credits card string length and against Luhn's algorithm
+  isValidCreditCard(cardString: string) {
+    if (cardString.toString().length < 13 || cardString.toString().length > 16) {
+      return false;
+    } else {
+      let sum = 0;
+      for (let i = 0; i < cardString.length; i++) {
+        let cardDigit = Number(cardString[i]);
+        if ((cardString.length - i) % 2 === 0) {
+          cardDigit = cardDigit * 2;
+          if (cardDigit > 9) {
+            cardDigit = cardDigit - 9;
+          }
+        }
+        sum += cardDigit;
+      }
+      console.log(sum % 10);
+      return sum % 10 === 0;
+    }
   }
 }
