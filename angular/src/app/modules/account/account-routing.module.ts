@@ -6,7 +6,8 @@ import { EditAccountComponent } from './edit-account/edit-account.component';
 
 const routes: Routes = [
   { component: AccountComponent, path: ':id' },
-  { component : EditAccountComponent, path: 'editaccount/:id' }
+  { component : EditAccountComponent, path: 'editaccount/:id' },
+
 ];
 
 @NgModule({
