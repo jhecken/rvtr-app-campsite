@@ -26,7 +26,14 @@ describe('AccountService', () => {
     get() {
       const config: Config = {
         api: {
-          account: 'test',
+          account: {
+            base: '',
+            uri: {
+              account: 'test',
+              payment: null,
+              profile: null
+            }
+          },
           booking: null,
           lodging: null,
           monitoring: null,
@@ -66,7 +73,7 @@ describe('AccountService', () => {
 
     tick();
 
-    req = httpTestingController.expectOne('t?id=0');
+    req = httpTestingController.expectOne('test?id=0');
     req.flush(JSON.stringify(true));
   }));
 
@@ -80,7 +87,7 @@ describe('AccountService', () => {
 
       tick();
 
-      req = httpTestingController.expectOne('t');
+      req = httpTestingController.expectOne('test');
       req.flush(accountMock);
     }));
 
@@ -93,7 +100,7 @@ describe('AccountService', () => {
 
       tick();
 
-      reqOne = httpTestingController.expectOne('t?id=0');
+      reqOne = httpTestingController.expectOne('test?id=0');
       reqOne.flush(accountMock);
     }));
   });
@@ -107,7 +114,7 @@ describe('AccountService', () => {
 
     tick();
 
-    req = httpTestingController.expectOne('t');
+    req = httpTestingController.expectOne('test');
     req.flush(JSON.stringify(true));
   }));
 
@@ -121,7 +128,7 @@ describe('AccountService', () => {
 
     tick();
 
-    req = httpTestingController.expectOne('t');
+    req = httpTestingController.expectOne('test');
     req.flush(accountMock[0]);
   }));
 });

@@ -64,21 +64,45 @@ export class EditAccountComponent implements OnInit {
 
   // adds a new credit card info to the array of payments in the data:Account property
   addCard(name: string, cardNumber: number, cardExpi: Date) {
-    // validation to check entered card name is not empty, is 15 digit number, and is a future expiration date
     const today = new Date();
-    if (cardNumber.toString().length !== 15 || this.isNullOrWhitespace(name) ||
-      today > cardExpi || this.data.payments.some(x => x.cardNumber === cardNumber.toString())) {
+    const cardString = cardNumber.toString();
+    // validation to check entered card name is not empty, is 13-16 digits, is valid according to luhn's, and has a future expiration date
+    if (this.isNullOrWhitespace(name) ||
+        today > cardExpi || 
+        this.data.payments.some(x => x.cardNumber === cardString ||
+        !this.isValidCreditCard(cardString))) {
       return console.log('Error, please try again');
     } else {
       const newCard: Payment = {
         id: 0,
         cardExpirationDate: cardExpi,
         cardName: name,
-        cardNumber: cardNumber.toString()
+        cardNumber: cardString
       };
       this.data.payments.push(newCard);
       this.toggleCard();
       console.log('Successfully added to the list');
+    }
+  }
+
+  // Credit card validation function, checks credits card string length and against Luhn's algorithm
+  isValidCreditCard(cardString: string) {
+    if (cardString.toString().length < 13 || cardString.toString().length > 16) {
+      return false;
+    } else {
+      let sum = 0;
+      for (let i = 0; i < cardString.length; i++) {
+        let cardDigit = parseInt(cardString[i]);
+        if ((cardString.length - i) % 2 === 0) {
+          cardDigit = cardDigit * 2;
+          if (cardDigit > 9) {
+            cardDigit = cardDigit - 9;
+          }
+        }
+        sum += cardDigit;
+      }
+      console.log(sum % 10);
+      return sum % 10 === 0;
     }
   }
 
@@ -113,8 +137,10 @@ export class EditAccountComponent implements OnInit {
         const image = new Image();
         image.src = e.target.result;
         image.onload = rs => {
-          const imgHeight = rs.currentTarget['height'];
-          const imgWidth = rs.currentTarget['width'];
+          const height = 'height';
+          const width = 'width';
+          const imgHeight = rs.currentTarget[height];
+          const imgWidth = rs.currentTarget[width];
 
           console.log(imgHeight, imgWidth);
 
@@ -184,13 +210,15 @@ export class EditAccountComponent implements OnInit {
       this.isNullOrWhitespace(this.data.address.postalCode) || this.isNullOrWhitespace(this.data.address.country) ||
       this.data.payments.length <= 0 || this.data.profiles.length <= 0) {
       confirm('Please fill all the information and have at least one payment and profile before you update');
+    } else {
+      this.accountService.put(this.data).subscribe(
+        success => {
+          console.log('success: ', this.data);
+          confirm('Account updated!');
+          this.router.navigateByUrl(`account/${this.data.id.toString()}`);
+        },
+        error => console.log('error'));
     }
-
-    this.accountService.put(this.data).subscribe(
-      success => console.log('success: ', this.data),
-      error => console.log('error'));
-    confirm('Account updated!');
-    this.router.navigateByUrl(`account/${this.data.id.toString()}`);
   }
 
   constructor(private readonly accountService: AccountService,

@@ -8,7 +8,6 @@ import { LodgingService } from 'src/app/services/lodging/lodging.service';
 
 import { map } from 'rxjs/operators';
 
-
 @Component({
   selector: 'uic-account',
   templateUrl: './account.component.html',
@@ -17,32 +16,30 @@ export class AccountComponent implements OnInit {
   // properties
   data: Account;
   bookings: Booking[];
-  bookingLocations: string[] = [];
   reviews: Review[];
-  reviewLocations: string[] = [];
 
   // functions
-  // http get to call the most recent booking information from the booking service.
+  // http get to call the most 2 recent bookings and related lodging information from the booking service.
+  // The 2 listings serve as a quick snapshot accessible from the account dashboard.
   // Bookings will be sorted on the API end. using account id.
   getBookings() {
-    this.accountService.getBookings(this.data.id.toString()).pipe(map(bookings => bookings.slice(0, 2))).subscribe(books => this.bookings = books);
-    if (this.bookings.length >= 1) {
-      for (const booking of this.bookings){
-        this.lodgingService.get(booking.lodgingId.toString())
-          .subscribe(lodge => this.bookingLocations.push(lodge[0].name));
-      }
-    }
+    this.accountService.getBookings(this.data.id.toString())
+      .pipe(map(bookings => bookings.slice(0, 2)))
+      .subscribe(resultBookings => {
+        this.bookings = resultBookings;
+        this.bookings.forEach(booking =>
+          this.lodgingService.get(booking.lodgingId.toString())
+                             .subscribe(lodging =>
+                                booking.lodging = lodging[0]));
+      });
   }
 
-  // http get to call the most recent reviews by the account from the review service. using account id.
+  // http get to call the most recent 2 reviews by the account from the review service. using account id.
+  // The 2 listings serve as a quick snapshot accessible from the account dashboard
   getReviews() {
-    this.accountService.dummyGetReviews('hi').subscribe(val => this.reviews = val);
-    if (this.reviews.length >= 1) {
-      for (const review of this.reviews) {
-        this.lodgingService.get(review.hotelId.toString())
-          .subscribe(lodge => this.reviewLocations.push(lodge[0].name));
-      }
-    }
+    this.accountService.getReviews(this.data.id.toString())
+    .pipe(map(reviews => reviews.slice(0, 2)))
+    .subscribe(val => this.reviews = val);
   }
 
   // http get to retrieve account information from account service using account id
@@ -50,18 +47,10 @@ export class AccountComponent implements OnInit {
     const userId = this.accountService.getUserId();
     // const userId = +this.route.snapshot.paramMap.get('id');
     this.accountService.get(userId).subscribe(data => {
-      this.data = data[0]; 
-      this.obscure();
+      this.data = data[0];
       this.getReviews();
       this.getBookings();
     });
-  }
-
-  // hashing the credit card number displayed.
-  obscure() {
-    for(let payment of this.data.payments){
-      payment.cardNumber = `***********${payment.cardNumber.substring(11, 16)}`;
-    }
   }
 
   constructor(private readonly accountService: AccountService,
