@@ -8,6 +8,8 @@ import { Review } from '../../data/review.model';
 import { Booking } from '../../data/booking.model';
 
 import * as _ from 'lodash';
+import { Payment } from 'src/app/data/payment.model';
+import { Profile } from 'src/app/data/profile.model';
 
 @Injectable({
   providedIn: 'root',
@@ -29,9 +31,6 @@ export class AccountService {
     this.profileUrl$ = config.get().pipe(map((cfg) => cfg.api.account.base + cfg.api.account.uri.profile));
   }
 
-  getUserId() {
-    return '1';
-  }
 
   /**
    * Represents the _Account Service_ `delete` method
@@ -40,18 +39,46 @@ export class AccountService {
    */
   delete(id: string): Observable<boolean> {
     return this.accountUrl$.pipe(
-      concatMap((url) => this.http.delete<boolean>(url, { params: { id } }))
+      concatMap((url) => this.http.delete<boolean>(url + "/" + id))
     );
   }
+
+  deletePayment(id: number): Observable<boolean> {
+    return this.paymentUrl$.pipe(
+      concatMap((url) => this.http.delete<boolean>(url + "/" + id))
+    );
+  }
+
+  deleteProfile(id: number): Observable<boolean> {
+    return this.profileUrl$.pipe(
+      concatMap((url) => this.http.delete<boolean>(url + "/" + id))
+    );
+  }
+
 
   /**
    * Represents the _Account Service_ `get` method
    *
    * @param id string
    */
+
+  getUserId() {
+    return '1';
+  }
+
   get(id?: string): Observable<Account[]> {
     const options = id ? { params: new HttpParams().set('id', id) } : {};
     return this.accountUrl$.pipe(concatMap((url) => this.http.get<Account[]>(url, options)));
+  }
+
+  getPayment(id?: string): Observable<Payment[]> {
+    const options = id ? { params: new HttpParams().set('id', id) } : {};
+    return this.paymentUrl$.pipe(concatMap((url) => this.http.get<Payment[]>(url, options)));
+  }
+
+  getProfile(id?: string): Observable<Profile[]> {
+    const options = id ? { params: new HttpParams().set('id', id) } : {};
+    return this.profileUrl$.pipe(concatMap((url) => this.http.get<Profile[]>(url, options)));
   }
 
   /**
@@ -61,6 +88,14 @@ export class AccountService {
    */
   post(account: Account): Observable<boolean> {
     return this.accountUrl$.pipe(concatMap((url) => this.http.post<boolean>(url, account)));
+  }
+
+  postPayment(payment: Payment): Observable<boolean> {
+    return this.paymentUrl$.pipe(concatMap((url) => this.http.post<boolean>(url, payment)));
+  }
+
+  postProfile(profile: Profile): Observable<boolean> {
+    return this.profileUrl$.pipe(concatMap((url) => this.http.post<boolean>(url, profile)));
   }
 
   /**
