@@ -7,7 +7,6 @@ import { AccountComponent } from './account/account.component';
 import { DisplayReviewsComponent } from './display-reviews/display-reviews.component';
 import { DisplayBookingsComponent } from './display-bookings/display-bookings.component';
 
-
 @NgModule({
   declarations: [AccountComponent, EditAccountComponent, DisplayReviewsComponent, DisplayBookingsComponent],
   imports: [

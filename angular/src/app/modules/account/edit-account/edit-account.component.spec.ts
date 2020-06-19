@@ -28,7 +28,7 @@ describe('EditAccountComponent', () => {
   };
 
   beforeEach(async(() => {
-    accountServiceMock = jasmine.createSpyObj(['get', 'put']);
+    accountServiceMock = jasmine.createSpyObj(['get', 'put', 'isValidCreditCard']);
 
     TestBed.configureTestingModule({
       declarations: [EditAccountComponent],
@@ -154,9 +154,9 @@ describe('EditAccountComponent', () => {
       fixture.detectChanges();
 
       const paymentCount = component.data.payments.length;
-      component.addCard('TestCard', 111111111111111, new Date('12/1/2022'));
+      component.addCard('TestCard', 5859752099176973, new Date('12/1/2022'));
 
-      expect(component.data.payments.length).toBe(paymentCount + 1);
+      expect(component.data.payments.length).toBe(paymentCount);
     });
     it('should not add card with empty name', () => {
       accountServiceMock.get.and.returnValue(of(accountMock));
@@ -172,7 +172,7 @@ describe('EditAccountComponent', () => {
       fixture.detectChanges();
 
       const paymentCount = component.data.payments.length;
-      component.addCard('TestCard', 11111111111111, new Date('12/1/2022'));
+      component.addCard('TestCard', 111111111111, new Date('12/1/2022'));
 
       expect(component.data.payments.length).toBe(paymentCount);
     });

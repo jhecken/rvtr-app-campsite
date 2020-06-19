@@ -68,9 +68,9 @@ export class EditAccountComponent implements OnInit {
     const cardString = cardNumber.toString();
     // validation to check entered card name is not empty, is 13-16 digits, is valid according to luhn's, and has a future expiration date
     if (this.isNullOrWhitespace(name) ||
-        today > cardExpi || 
+        today > cardExpi ||
         this.data.payments.some(x => x.cardNumber === cardString ||
-        !this.isValidCreditCard(cardString))) {
+        !this.accountService.isValidCreditCard(cardString))) {
       return console.log('Error, please try again');
     } else {
       const newCard: Payment = {
@@ -85,27 +85,6 @@ export class EditAccountComponent implements OnInit {
     }
   }
 
-  // Credit card validation function, checks credits card string length and against Luhn's algorithm
-  isValidCreditCard(cardString: string) {
-    if (cardString.toString().length < 13 || cardString.toString().length > 16) {
-      return false;
-    } else {
-      let sum = 0;
-      for (let i = 0; i < cardString.length; i++) {
-        let cardDigit = parseInt(cardString[i]);
-        if ((cardString.length - i) % 2 === 0) {
-          cardDigit = cardDigit * 2;
-          if (cardDigit > 9) {
-            cardDigit = cardDigit - 9;
-          }
-        }
-        sum += cardDigit;
-      }
-      console.log(sum % 10);
-      return sum % 10 === 0;
-    }
-  }
-
   // remove a payment card from arrays of payments in the data:Account property
   removeCard(card) {
     this.data.payments
@@ -113,49 +92,13 @@ export class EditAccountComponent implements OnInit {
   }
 
   // For transferring uploaded image to base64
-  fileChangeEvent(fileInput: any) {
-    this.imageError = null;
-    if (fileInput.target.files && fileInput.target.files[0]) {
-      // Size Filter Bytes
-      const maxSize = 20971520;
-      const allowedTypes = ['image/png', 'image/jpeg'];
-      const maxHeight = 15200;
-      const maxWidth = 25600;
-
-      if (fileInput.target.files[0].size > maxSize) {
-        this.imageError = `Maximum size allowed is ${maxSize / 1000} + Mb`;
-
-        return false;
-      }
-
-      if (!_.includes(allowedTypes, fileInput.target.files[0].type)) {
-        this.imageError = 'Only Images are allowed ( JPG | PNG )';
-        return false;
-      }
-      const reader = new FileReader();
-      reader.onload = (e: any) => {
-        const image = new Image();
-        image.src = e.target.result;
-        image.onload = rs => {
-          const height = 'height';
-          const width = 'width';
-          const imgHeight = rs.currentTarget[height];
-          const imgWidth = rs.currentTarget[width];
-
-          console.log(imgHeight, imgWidth);
-
-          if (imgHeight > maxHeight && imgWidth > maxWidth) {
-            this.imageError = `Maximum dimensions allowed: ${maxHeight} * ${maxWidth}px`;
-            return false;
-          } else {
-            const imgBase64Path = e.target.result;
-            this.cardImageBase64 = imgBase64Path;
-            this.isImageSaved = true;
-            // this.previewImagePath = imgBase64Path;
-          }
-        };
-      };
-      reader.readAsDataURL(fileInput.target.files[0]);
+  async fileChangeEvent(fileInput: any) {
+    const result = await this.accountService.validateImage(fileInput);
+    this.isImageSaved = result.valid;
+    if (this.isImageSaved) {
+      this.cardImageBase64 = result.message;
+    } else {
+      this.imageError = result.message;
     }
   }
 
