@@ -10,10 +10,10 @@ import { Review } from 'src/app/data/review.model';
 })
 export class DisplayReviewsComponent implements OnInit {
 
-  //properties
+  // properties
   reviews: Review[];
 
-  //functions
+  // functions
   // http get to call the most recent 2 reviews by the account from the review service. using account id.
   // The 2 listings serve as a quick snapshot accessible from the account dashboard
   getReviews() {
@@ -21,11 +21,10 @@ export class DisplayReviewsComponent implements OnInit {
     .pipe(map(reviews => reviews.slice(0, 2)))
     .subscribe(val => this.reviews = val);
   }
-  
+
   constructor(private readonly accountService: AccountService) { }
 
   ngOnInit(): void {
     this.getReviews();
   }
-
 }

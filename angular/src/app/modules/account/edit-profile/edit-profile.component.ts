@@ -20,27 +20,27 @@ import { trigger, transition, animate, style } from '@angular/animations';
   ]
 })
 export class EditProfileComponent implements OnInit {
-  
-  //properties
+
+  // properties
   hideProfile = true;
-  profiles:Profile[];
+  profiles: Profile[];
   imageError: string;
   isImageSaved: boolean;
-  newProfile:Profile={
-    id:0,
-    accountId:Number(this.accountService.getUserId()),
-    email:null,
-    name:{
-      id:0,
-      family:null,
-      given:null
+  newProfile: Profile = {
+    id: 0,
+    accountId: Number(this.accountService.getUserId()),
+    email: null,
+    name: {
+      id: 0,
+      family: null,
+      given: null
     },
-    phone:null,
-    age:'Adult',
-    image:null
-  }
+    phone: null,
+    age: 'Adult',
+    image: null
+  };
 
-  //functions
+  // functions
   // boolean toggle to show/hide the add new profile section in html
   toggleProfile() {
     this.hideProfile = !this.hideProfile;
@@ -52,7 +52,7 @@ export class EditProfileComponent implements OnInit {
       return true;
     }
     return input.replace(/\s/g, '').length < 1;
-  }  
+  }
 
   // For transferring uploaded image to base64
   async fileChangeEvent(fileInput: any) {
@@ -64,42 +64,42 @@ export class EditProfileComponent implements OnInit {
       this.imageError = result.message;
     }
   }
-  
+
   // removing a selected image from the add new profile section
   removeImage() {
     this.newProfile.image = null;
     this.isImageSaved = false;
   }
-  
-  //get profile inofrmation from the profile api
+
+  // get profile inofrmation from the profile api
   getProfiles(){
     this.accountService.getProfile(this.accountService.getUserId().toString()).subscribe(
-      profile => {this.profiles = profile; console.log(profile);}
-    )
+      profile => this.profiles = profile
+    );
   }
 
   // adds a new profile to the array of profiles in the data:Account property
   addProfile() {
     if (this.profiles.some(x => x.name.given === this.newProfile.name.given &&
        x.name.family === this.newProfile.name.family) ||
-      this.isNullOrWhitespace(this.newProfile.name.given) || 
+      this.isNullOrWhitespace(this.newProfile.name.given) ||
       this.isNullOrWhitespace(this.newProfile.name.family) ||
-      this.isNullOrWhitespace(this.newProfile.email) || 
+      this.isNullOrWhitespace(this.newProfile.email) ||
       this.newProfile.phone.toString().length !== 10) {
       return console.log('Error, please try again');
     }
     console.log(this.newProfile);
     this.accountService.postProfile(this.newProfile).subscribe(profile => {
         this.getProfiles();
-        this.toggleProfile();        
-      })
+        this.toggleProfile();
+      });
     }
 
   // remove a profile from array of profiles in the data:Account property
   removeProfile(profileId: number) {
     this.accountService.deleteProfile(profileId).subscribe(profile =>
       this.getProfiles()
-    )
+    );
   }
 
   constructor(private readonly accountService: AccountService) { }

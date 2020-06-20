@@ -39,19 +39,19 @@ export class AccountService {
    */
   delete(id: string): Observable<boolean> {
     return this.accountUrl$.pipe(
-      concatMap((url) => this.http.delete<boolean>(url + "/" + id))
+      concatMap((url) => this.http.delete<boolean>(url + '/' + id))
     );
   }
 
   deletePayment(id: number): Observable<boolean> {
     return this.paymentUrl$.pipe(
-      concatMap((url) => this.http.delete<boolean>(url + "/" + id))
+      concatMap((url) => this.http.delete<boolean>(url + '/' + id))
     );
   }
 
   deleteProfile(id: number): Observable<boolean> {
     return this.profileUrl$.pipe(
-      concatMap((url) => this.http.delete<boolean>(url + "/" + id))
+      concatMap((url) => this.http.delete<boolean>(url + '/' + id))
     );
   }
 
