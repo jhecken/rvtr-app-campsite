@@ -10,8 +10,8 @@ import { LodgingService } from 'src/app/services/lodging/lodging.service';
   styleUrls: ['./display-bookings.component.scss']
 })
 export class DisplayBookingsComponent implements OnInit {
-  
-  //properties
+
+  // properties
   bookings: Booking[];
 
   // functions
@@ -30,8 +30,10 @@ export class DisplayBookingsComponent implements OnInit {
       });
   }
 
-  constructor(private readonly accountService: AccountService,
-    private readonly lodgingService: LodgingService) { }
+  constructor(
+    private readonly accountService: AccountService,
+    private readonly lodgingService: LodgingService
+    ) { }
 
   ngOnInit(): void {
     this.getBookings();

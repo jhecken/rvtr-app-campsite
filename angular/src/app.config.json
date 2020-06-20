@@ -1,7 +1,8 @@
 {
   "api": {
     "account": {
-      "base": "https://localhost:44385/api/v0/",
+      "_comment":"'https://localhost:44385/api/v0/' for localhost",
+      "base": "https://my-json-server.typicode.com/P3-Team-A/demo/",
       "uri": {
         "account": "Account",
         "payment": "Payment",

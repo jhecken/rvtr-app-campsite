@@ -47,7 +47,7 @@ export class EditAccountComponent implements OnInit {
       this.accountService.put(this.data).subscribe(
         success => {
           console.log('success: ', this.data);
-          alert("updated!")
+          alert('updated!');
         },
         error => console.log('error'));
     }

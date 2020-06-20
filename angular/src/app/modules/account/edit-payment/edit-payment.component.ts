@@ -21,13 +21,13 @@ import { trigger, transition, animate, style } from '@angular/animations';
 })
 
 export class EditPaymentComponent implements OnInit {
-  //properties
+  // properties
   hideCard = true;
   cards: Payment[];
   newCard: Payment = {
     id: 0,
     accountId: Number(this.accountService.getUserId()),
-    cardName: "",
+    cardName: '',
     cardNumber: null,
     cardExpirationDate: null
   };
@@ -49,15 +49,15 @@ export class EditPaymentComponent implements OnInit {
   addCard() {
     const today = new Date();
     if (this.isNullOrWhitespace(this.newCard.cardName) ||
-      today > this.newCard.cardExpirationDate||
+      today > this.newCard.cardExpirationDate ||
       !this.accountService.isValidCreditCard(this.newCard.cardNumber)) {
       return console.log('Error, please try again');
     } else {
-      this.accountService.postPayment(this.newCard).subscribe(payment =>{
+      this.accountService.postPayment(this.newCard).subscribe(payment => {
         this.getPayment();
         this.toggleCard();
-        alert("added!")
-      })    
+        alert('added!');
+      });
     }
   }
 
@@ -65,13 +65,13 @@ export class EditPaymentComponent implements OnInit {
   removeCard(cardId: number) {
     this.accountService.deletePayment(cardId).subscribe(payment =>
       this.getPayment()
-    )
+    );
   }
   // get payment information from the payment api
   getPayment() {
     this.accountService.getPayment(this.accountService.getUserId()).subscribe(
       payments => this.cards = payments
-    )
+    );
   }
 
   constructor(private readonly accountService: AccountService) { }

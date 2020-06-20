@@ -10,7 +10,11 @@ import { EditPaymentComponent } from './edit-payment/edit-payment.component';
 import { EditProfileComponent } from './edit-profile/edit-profile.component';
 
 @NgModule({
-  declarations: [AccountComponent, EditAccountComponent, DisplayReviewsComponent, DisplayBookingsComponent, EditPaymentComponent, EditProfileComponent],
+  declarations: [
+    AccountComponent, EditAccountComponent,
+    DisplayReviewsComponent, DisplayBookingsComponent,
+    EditPaymentComponent, EditProfileComponent
+  ],
   imports: [
     AccountRoutingModule, FormsModule, CommonModule
   ]
