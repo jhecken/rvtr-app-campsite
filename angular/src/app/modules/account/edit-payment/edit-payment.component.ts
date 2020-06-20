@@ -27,7 +27,7 @@ export class EditPaymentComponent implements OnInit {
   newCard: Payment = {
     id: 0,
     accountId: Number(this.accountService.getUserId()),
-    cardName: "",
+    cardName: '',
     cardNumber: null,
     cardExpirationDate: null
   };
@@ -56,7 +56,7 @@ export class EditPaymentComponent implements OnInit {
       this.accountService.postPayment(this.newCard).subscribe(payment =>{
         this.getPayment();
         this.toggleCard();
-        alert("added!")
+        alert('added!')
       })    
     }
   }
