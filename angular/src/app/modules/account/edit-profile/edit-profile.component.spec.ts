@@ -16,7 +16,7 @@ describe('EditProfileComponent', () => {
   let component: EditProfileComponent;
   let fixture: ComponentFixture<EditProfileComponent>;
   let httpTestingController: HttpTestingController;
-  let accountServiceMock : AccountService
+  let accountServiceMock: AccountService;
 
   let profileMock: Profile[];
 
@@ -40,15 +40,15 @@ describe('EditProfileComponent', () => {
 
       providers: [AccountService],
       schemas: [NO_ERRORS_SCHEMA],
-      imports: [FormsModule, RouterTestingModule,HttpClientTestingModule]
+      imports: [FormsModule, RouterTestingModule, HttpClientTestingModule]
     })
       .compileComponents();
-      fixture = TestBed.createComponent(EditProfileComponent);
-      component = fixture.componentInstance;
+    fixture = TestBed.createComponent(EditProfileComponent);
+    component = fixture.componentInstance;
 
        // We inject our service (which imports the HttpClient) and the Test Controller
-    httpTestingController = TestBed.get(HttpTestingController);
-    accountServiceMock = TestBed.get(AccountService);
+    httpTestingController = TestBed.inject(HttpTestingController);
+    accountServiceMock = TestBed.inject(AccountService);
   }));
 
   beforeEach(() => {
@@ -122,18 +122,18 @@ describe('EditProfileComponent', () => {
 
   xdescribe('addProfile', () => {
     it('should add valid profile', () => {
-      //accountServiceMock.get.and.returnValue(of());
+      // accountServiceMock.get.and.returnValue(of());
       fixture.detectChanges();
       component.newProfile =  {
         id: 1,
         accountId: 1,
-        email: "tom@tim.com",
+        email: 'tom@tim.com',
         name: {
           id: 0,
-          family: "tim",
-          given: "tom"
+          family: 'tim',
+          given: 'tom'
         },
-        phone: "5551234567",
+        phone: '5551234567',
         age: 'Adult',
         image: null
       };
@@ -142,34 +142,23 @@ describe('EditProfileComponent', () => {
       expect(component.profiles.length).toBe(3);
       expect(component.profiles[2].email).toBe('tom@tim.com');
     });
-    
   });
-
+});
   // describe('removeProfile', () => {
-
   //   it('should remove correct profile', () => {
   //     accountServiceMock.get.and.returnValue(of(profileMock));
   //     fixture.detectChanges();
-
   //     component.removeProfile(profileMock[0].profiles[0]);
-
   //     expect(component.data.profiles.length).toBe(1);
   //     expect(component.data.profiles[0]).toBe(profileMock[0].profiles[0]);
   //   });
   // });
-
   // describe('onSubmit', () => {
   //   it('should call put on AccountService with valid account', () => {
   //     accountServiceMock.get.and.returnValue(of(profileMock));
   //     accountServiceMock.put.and.returnValue(of(profileMock));
   //     fixture.detectChanges();
-
   //     component.onSubmit();
-
   //     expect(accountServiceMock.put).toHaveBeenCalled();
   //   });
-
-    
-  
   // });
-});

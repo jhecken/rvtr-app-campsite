@@ -112,9 +112,9 @@ xdescribe('EditAccountComponent', () => {
   xdescribe('toggleCard', () => {
 
     it('should show card after toggle', () => {
-      //component.toggleCard();
+      // component.toggleCard();
 
-      //expect(component.hideCard).toBeFalse();
+      // expect(component.hideCard).toBeFalse();
       // Test the actual element
     });
   });
@@ -122,9 +122,9 @@ xdescribe('EditAccountComponent', () => {
   xdescribe('toggleProfile', () => {
 
     it('should show profile after toggle', () => {
-      //component.toggleProfile();
+      // component.toggleProfile();
 
-      //expect(component.hideProfile).toBeFalse();
+      // expect(component.hideProfile).toBeFalse();
       // Test the actual element
     });
   });
@@ -154,7 +154,7 @@ xdescribe('EditAccountComponent', () => {
       fixture.detectChanges();
 
       const paymentCount = component.data.payments.length;
-      //component.addCard('TestCard', 5859752099176973, new Date('12/1/2022'));
+      // component.addCard('TestCard', 5859752099176973, new Date('12/1/2022'));
 
       expect(component.data.payments.length).toBe(paymentCount);
     });
@@ -163,7 +163,7 @@ xdescribe('EditAccountComponent', () => {
       fixture.detectChanges();
 
       const paymentCount = component.data.payments.length;
-      //component.addCard('', 111111111111111, new Date('12/1/2022'));
+      // component.addCard('', 111111111111111, new Date('12/1/2022'));
 
       expect(component.data.payments.length).toBe(paymentCount);
     });
@@ -172,7 +172,7 @@ xdescribe('EditAccountComponent', () => {
       fixture.detectChanges();
 
       const paymentCount = component.data.payments.length;
-      //component.addCard('TestCard', 111111111111, new Date('12/1/2022'));
+      // component.addCard('TestCard', 111111111111, new Date('12/1/2022'));
 
       expect(component.data.payments.length).toBe(paymentCount);
     });
@@ -181,7 +181,7 @@ xdescribe('EditAccountComponent', () => {
       fixture.detectChanges();
 
       const paymentCount = component.data.payments.length;
-      //component.addCard('TestCard', 111111111111111, new Date('12/1/1922'));
+      // component.addCard('TestCard', 111111111111111, new Date('12/1/1922'));
 
       expect(component.data.payments.length).toBe(paymentCount);
     });
@@ -192,7 +192,7 @@ xdescribe('EditAccountComponent', () => {
       accountServiceMock.get.and.returnValue(of(accountMock));
       fixture.detectChanges();
 
-      //component.removeCard(accountMock[0].payments[1]);
+      // component.removeCard(accountMock[0].payments[1]);
 
       expect(component.data.payments.length).toBe(1);
       expect(component.data.payments[0]).toBe(accountMock[0].payments[0]);
@@ -204,7 +204,7 @@ xdescribe('EditAccountComponent', () => {
       accountServiceMock.get.and.returnValue(of(accountMock));
       fixture.detectChanges();
 
-      //component.addProfile('Tim', 'Tom', 'Adult', 'tom@tim.com', 5551234567, null);
+      // component.addProfile('Tim', 'Tom', 'Adult', 'tom@tim.com', 5551234567, null);
 
       expect(component.data.profiles.length).toBe(3);
       expect(component.data.profiles[2].email).toBe('tom@tim.com');
@@ -213,7 +213,7 @@ xdescribe('EditAccountComponent', () => {
       accountServiceMock.get.and.returnValue(of(accountMock));
       fixture.detectChanges();
 
-      //component.addProfile('', 'Tom', 'Adult', 'tom@tim.com', 5551234567, null);
+      // component.addProfile('', 'Tom', 'Adult', 'tom@tim.com', 5551234567, null);
 
       expect(component.data.profiles.length).toBe(2);
     });
@@ -221,7 +221,7 @@ xdescribe('EditAccountComponent', () => {
       accountServiceMock.get.and.returnValue(of(accountMock));
       fixture.detectChanges();
 
-      //component.addProfile('Jane', 'Doe', 'Adult', 'tom@tim.com', 5551234567, null);
+      // component.addProfile('Jane', 'Doe', 'Adult', 'tom@tim.com', 5551234567, null);
 
       expect(component.data.profiles.length).toBe(2);
     });
@@ -229,7 +229,7 @@ xdescribe('EditAccountComponent', () => {
       accountServiceMock.get.and.returnValue(of(accountMock));
       fixture.detectChanges();
 
-      //component.addProfile('Tim', 'Tom', 'Adult', 'tom@tim.com', 555123457, null);
+      // component.addProfile('Tim', 'Tom', 'Adult', 'tom@tim.com', 555123457, null);
 
       expect(component.data.profiles.length).toBe(2);
     });
@@ -237,7 +237,7 @@ xdescribe('EditAccountComponent', () => {
       accountServiceMock.get.and.returnValue(of(accountMock));
       fixture.detectChanges();
 
-      //component.addProfile('', 'Tom', 'Adult', '', 5551234567, null);
+      // component.addProfile('', 'Tom', 'Adult', '', 5551234567, null);
 
       expect(component.data.profiles.length).toBe(2);
     });
@@ -249,7 +249,7 @@ xdescribe('EditAccountComponent', () => {
       accountServiceMock.get.and.returnValue(of(accountMock));
       fixture.detectChanges();
 
-      //component.removeProfile(accountMock[0].profiles[0]);
+      // component.removeProfile(accountMock[0].profiles[0]);
 
       expect(component.data.profiles.length).toBe(1);
       expect(component.data.profiles[0]).toBe(accountMock[0].profiles[0]);
