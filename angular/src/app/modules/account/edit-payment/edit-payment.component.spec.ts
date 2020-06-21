@@ -8,9 +8,6 @@ describe('EditPaymentComponent', () => {
   let component: EditPaymentComponent;
   let fixture: ComponentFixture<EditPaymentComponent>;
 
-
-  let accountServiceMock;
-
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ EditPaymentComponent ],
