@@ -17,6 +17,7 @@ describe('BookingService', () => {
       id: '0',
       accountId: '0',
       lodgingId: '0',
+      lodging: null,
       guests: [],
       rentals: [],
       stay: null,

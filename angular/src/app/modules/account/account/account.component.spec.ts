@@ -32,7 +32,7 @@ describe('AccountComponent', () => {
   let lodgingMock: Lodging[];
 
   beforeEach(async(() => {
-    accountServiceMock = jasmine.createSpyObj(['get', 'getBookings', 'dummyGetReveiws', 'getUserId']);
+    accountServiceMock = jasmine.createSpyObj(['get', 'getBookings', 'getReviews', 'getUserId']);
     lodgingServiceMock = jasmine.createSpyObj(['get']);
 
     TestBed.configureTestingModule({
@@ -103,7 +103,8 @@ describe('AccountComponent', () => {
       {
         id: '1',
         accountId: '1',
-        hotelId: '1',
+        lodgingId: '1',
+        lodging: null,
         comment: 'good stuff man',
         dateCreated: new Date('6/10/2020'),
         rating: 4
@@ -114,6 +115,7 @@ describe('AccountComponent', () => {
         id: '1',
         accountId: '1',
         lodgingId: '1',
+        lodging: null,
         guests: null,
         rentals: null,
         stay: {
@@ -138,8 +140,11 @@ describe('AccountComponent', () => {
   });
 
   it('should create', () => {
+    reviewsMock = [];
+    bookingsMock = [];
+
     accountServiceMock.get.and.returnValue(of(accountMock));
-    accountServiceMock.dummyGetReveiws.and.returnValue(of(reviewsMock));
+    accountServiceMock.getReviews.and.returnValue(of(reviewsMock));
     accountServiceMock.getBookings.and.returnValue(of(bookingsMock));
     accountServiceMock.getUserId.and.returnValue(1);
 
@@ -155,7 +160,7 @@ describe('AccountComponent', () => {
     bookingsMock = [];
 
     accountServiceMock.get.and.returnValue(of(accountMock));
-    accountServiceMock.dummyGetReveiws.and.returnValue(of(reviewsMock));
+    accountServiceMock.getReviews.and.returnValue(of(reviewsMock));
     accountServiceMock.getBookings.and.returnValue(of(bookingsMock));
     accountServiceMock.getUserId.and.returnValue(1);
 
