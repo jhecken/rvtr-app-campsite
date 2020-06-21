@@ -1,6 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { AccountService } from 'src/app/services/account/account.service';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { DisplayReviewsComponent } from './display-reviews.component';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 describe('DisplayReviewsComponent', () => {
   let component: DisplayReviewsComponent;
@@ -8,7 +10,8 @@ describe('DisplayReviewsComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ DisplayReviewsComponent ]
+      declarations: [ DisplayReviewsComponent ],
+      imports: [HttpClientTestingModule]
     })
     .compileComponents();
   }));
