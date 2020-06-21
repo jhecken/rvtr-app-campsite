@@ -7,36 +7,16 @@ import { FormsModule } from '@angular/forms';
 import { of } from 'rxjs';
 import { RouterTestingModule } from '@angular/router/testing';
 import { Profile } from '../../../data/profile.model';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 
 
-// describe('EditProfileComponent', () => {
-//   let component: EditProfileComponent;
-//   let fixture: ComponentFixture<EditProfileComponent>;
 
-//   beforeEach(async(() => {
-//     TestBed.configureTestingModule({
-//       declarations: [ EditProfileComponent ]
-//     })
-//     .compileComponents();
-//   }));
-
-//   beforeEach(() => {
-//     fixture = TestBed.createComponent(EditProfileComponent);
-//     component = fixture.componentInstance;
-//     fixture.detectChanges();
-//   });
-
-//   it('should create', () => {
-//     expect(component).toBeTruthy();
-//   });
-// });
 
 describe('EditProfileComponent', () => {
   let component: EditProfileComponent;
   let fixture: ComponentFixture<EditProfileComponent>;
-
-  let accountServiceMock;
+  let httpTestingController: HttpTestingController;
+  let accountServiceMock : AccountService
 
   let profileMock: Profile[];
 
@@ -51,20 +31,24 @@ describe('EditProfileComponent', () => {
   };
 
   beforeEach(async(() => {
-    //accountServiceMock = jasmine.createSpyObj(['getProfiles']);
-
+    // accountServiceMock = jasmine.createSpyObj(['getProfiles']);
+    // (<jasmine.Spy>accountServiceMock.getFileReference).and.returnValue({
+    //   getUserId: () => of(null)
+    // });
     TestBed.configureTestingModule({
       declarations: [EditProfileComponent],
 
-      // providers: [
-      //   { provide: AccountService, useValue: accountServiceMock }
-      // ],
+      providers: [AccountService],
       schemas: [NO_ERRORS_SCHEMA],
       imports: [FormsModule, RouterTestingModule,HttpClientTestingModule]
     })
       .compileComponents();
       fixture = TestBed.createComponent(EditProfileComponent);
       component = fixture.componentInstance;
+
+       // We inject our service (which imports the HttpClient) and the Test Controller
+    httpTestingController = TestBed.get(HttpTestingController);
+    accountServiceMock = TestBed.get(AccountService);
   }));
 
   beforeEach(() => {
@@ -94,9 +78,6 @@ describe('EditProfileComponent', () => {
         image: null
       },
     ];
-
-    // fixture = TestBed.createComponent(EditProfileComponent);
-    // component = fixture.componentInstance;
   });
 
   it('should create', () => {
@@ -110,7 +91,7 @@ describe('EditProfileComponent', () => {
   //   expect(component).toBe(profileMock);
   // });
 
-  xdescribe('toggleProfile', () => {
+  describe('toggleProfile', () => {
 
     it('should show profile after toggle', () => {
       component.toggleProfile();
@@ -120,7 +101,7 @@ describe('EditProfileComponent', () => {
     });
   });
 
-  xdescribe('isNullOrWhitespace', () => {
+  describe('isNullOrWhitespace', () => {
     it('should return true on null string', () => {
 
       expect(component.isNullOrWhitespace(null)).toBeTrue();
@@ -141,7 +122,7 @@ describe('EditProfileComponent', () => {
 
   xdescribe('addProfile', () => {
     it('should add valid profile', () => {
-      accountServiceMock.get.and.returnValue(of(profileMock));
+      //accountServiceMock.get.and.returnValue(of());
       fixture.detectChanges();
       component.newProfile =  {
         id: 1,

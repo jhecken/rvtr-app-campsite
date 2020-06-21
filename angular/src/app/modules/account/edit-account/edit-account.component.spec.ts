@@ -28,7 +28,7 @@ xdescribe('EditAccountComponent', () => {
   };
 
   beforeEach(async(() => {
-    accountServiceMock = jasmine.createSpyObj(['get', 'put', 'isValidCreditCard']);
+    accountServiceMock = jasmine.createSpyObj([null]);
 
     TestBed.configureTestingModule({
       declarations: [EditAccountComponent],
