@@ -55,7 +55,6 @@ describe('EditProfileComponent', () => {
         image: null
       },
     ];
-    
     fixture = TestBed.createComponent(EditProfileComponent);
     component = fixture.componentInstance;
   });
@@ -106,7 +105,7 @@ describe('EditProfileComponent', () => {
       accountServiceMock.getProfile.and.returnValue(of(profileMock));
       accountServiceMock.getUserId.and.returnValue(of(1));
       accountServiceMock.postProfile.and.returnValue(of(true));
-      let newProfile:Profile = {
+      const newProfile: Profile = {
         id: 1,
         accountId: 1,
         email: 'tom@tim.com',
