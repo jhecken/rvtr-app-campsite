@@ -73,8 +73,8 @@ export class EditProfileComponent implements OnInit {
 
   // get profile inofrmation from the profile api
   getProfiles(){
-    this.accountService.getProfile(this.accountService.getUserId().toString()).subscribe(
-      profile => this.profiles = profile
+    this.accountService.getProfile(this.accountService.getUserId()).subscribe(
+      profile => {this.profiles = profile; console.log(this.profiles)}
     );
   }
 
