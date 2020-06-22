@@ -3,8 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { EditAccountComponent } from './edit-account.component';
 import { AccountService } from 'src/app/services/account/account.service';
 import { Account } from '../../../data/account.model';
-import { ActivatedRoute, Router } from '@angular/router';
-import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { of } from 'rxjs';
 import { RouterTestingModule } from '@angular/router/testing';
@@ -36,7 +35,6 @@ describe('EditAccountComponent', () => {
         { provide: ActivatedRoute, useValue: activatedRouteStub },
         { provide: AccountService, useValue: accountServiceMock }
       ],
-      schemas: [NO_ERRORS_SCHEMA],
       imports: [FormsModule, RouterTestingModule]
     })
       .compileComponents();
