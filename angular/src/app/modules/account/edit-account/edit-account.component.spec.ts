@@ -107,25 +107,6 @@ describe('EditAccountComponent', () => {
     expect(component.data).toBe(accountMock[0]);
   });
 
-  describe('isNullOrWhitespace', () => {
-    it('should return true on null string', () => {
-
-      expect(component.isNullOrWhitespace(null)).toBeTrue();
-    });
-    it('should return true on empty string', () => {
-
-      expect(component.isNullOrWhitespace('')).toBeTrue();
-    });
-    it('should return true on string of spaces string', () => {
-
-      expect(component.isNullOrWhitespace('  ')).toBeTrue();
-    });
-    it('should return false on non null/emtpy string', () => {
-
-      expect(component.isNullOrWhitespace('null')).toBeFalse();
-    });
-  });
-
   describe('onSubmit', () => {
     it('should call put on AccountService with valid account', () => {
       accountServiceMock.get.and.returnValue(of(accountMock));
