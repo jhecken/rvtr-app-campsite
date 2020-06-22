@@ -9,7 +9,7 @@ import { FormsModule } from '@angular/forms';
 import { of } from 'rxjs';
 import { RouterTestingModule } from '@angular/router/testing';
 
-xdescribe('EditAccountComponent', () => {
+describe('EditAccountComponent', () => {
   let component: EditAccountComponent;
   let fixture: ComponentFixture<EditAccountComponent>;
 
@@ -28,7 +28,7 @@ xdescribe('EditAccountComponent', () => {
   };
 
   beforeEach(async(() => {
-    accountServiceMock = jasmine.createSpyObj([null]);
+    accountServiceMock = jasmine.createSpyObj(['get', 'put']);
 
     TestBed.configureTestingModule({
       declarations: [EditAccountComponent],
@@ -98,11 +98,11 @@ xdescribe('EditAccountComponent', () => {
     component = fixture.componentInstance;
   });
 
-  xit('should create', () => {
+  it('should create', () => {
     expect(component).toBeTruthy();
   });
 
-  xit('should load account on creation', () => {
+  it('should load account on creation', () => {
     accountServiceMock.get.and.returnValue(of(accountMock));
     fixture.detectChanges();
 
@@ -129,7 +129,7 @@ xdescribe('EditAccountComponent', () => {
     });
   });
 
-  xdescribe('isNullOrWhitespace', () => {
+  describe('isNullOrWhitespace', () => {
     it('should return true on null string', () => {
 
       expect(component.isNullOrWhitespace(null)).toBeTrue();
@@ -256,7 +256,7 @@ xdescribe('EditAccountComponent', () => {
     });
   });
 
-  xdescribe('onSubmit', () => {
+  describe('onSubmit', () => {
     it('should call put on AccountService with valid account', () => {
       accountServiceMock.get.and.returnValue(of(accountMock));
       accountServiceMock.put.and.returnValue(of(accountMock));
