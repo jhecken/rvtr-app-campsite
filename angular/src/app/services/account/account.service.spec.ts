@@ -131,7 +131,7 @@ describe('AccountService', () => {
     req = httpTestingController.expectOne('test');
     req.flush(accountMock[0]);
   }));
-  
+
   // describe('isNullOrWhitespace', () => {
   //   it('should return true on null string', () => {
 
