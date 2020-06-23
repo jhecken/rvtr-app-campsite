@@ -132,22 +132,18 @@ describe('AccountService', () => {
     req.flush(accountMock[0]);
   }));
 
-  // describe('isNullOrWhitespace', () => {
-  //   it('should return true on null string', () => {
-
-  //     expect(component.isNullOrWhitespace(null)).toBeTrue();
-  //   });
-  //   it('should return true on empty string', () => {
-
-  //     expect(component.isNullOrWhitespace('')).toBeTrue();
-  //   });
-  //   it('should return true on string of spaces string', () => {
-
-  //     expect(component.isNullOrWhitespace('  ')).toBeTrue();
-  //   });
-  //   it('should return false on non null/emtpy string', () => {
-
-  //     expect(component.isNullOrWhitespace('null')).toBeFalse();
-  //   });
-  // });
+  describe('isNullOrWhitespace', () => {
+    it('should return true on null string', () => {
+      expect(service.isNullOrWhitespace(null)).toBeTrue();
+    });
+    it('should return true on empty string', () => {
+      expect(service.isNullOrWhitespace('')).toBeTrue();
+    });
+    it('should return true on string of spaces string', () => {
+      expect(service.isNullOrWhitespace('  ')).toBeTrue();
+    });
+    it('should return false on non null/emtpy string', () => {
+      expect(service.isNullOrWhitespace('null')).toBeFalse();
+    });
+  });
 });

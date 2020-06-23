@@ -300,6 +300,7 @@ export class AccountService {
     }
   }
 
+  
   // function to check if an input field is nul/undefined/or white spaces
   isNullOrWhitespace(input: string) {
     if (typeof input === 'undefined' || input === null) {
