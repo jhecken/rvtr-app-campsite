@@ -31,9 +31,12 @@ export class EditAccountComponent implements OnInit {
 
   // http put from account service to update account information, validation is very ugly
   onSubmit() {
-    if (this.accountService.isNullOrWhitespace(this.data.name) || this.accountService.isNullOrWhitespace(this.data.address.street) ||
-      this.accountService.isNullOrWhitespace(this.data.address.city) || this.accountService.isNullOrWhitespace(this.data.address.stateProvince) ||
-      this.accountService.isNullOrWhitespace(this.data.address.postalCode) || this.accountService.isNullOrWhitespace(this.data.address.country) ||
+    if (this.accountService.isNullOrWhitespace(this.data.name) ||
+        this.accountService.isNullOrWhitespace(this.data.address.street) ||
+        this.accountService.isNullOrWhitespace(this.data.address.city) ||
+        this.accountService.isNullOrWhitespace(this.data.address.stateProvince) ||
+        this.accountService.isNullOrWhitespace(this.data.address.postalCode) ||
+        this.accountService.isNullOrWhitespace(this.data.address.country) ||
       this.data.payments.length <= 0 || this.data.profiles.length <= 0) {
       confirm('Please fill all the information and have at least one payment and profile before you update');
     } else {

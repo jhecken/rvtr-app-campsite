@@ -13,7 +13,7 @@ describe('EditPaymentComponent', () => {
   let paymentsMock: Payment[];
 
   beforeEach(async(() => {
-    accountServiceMock = jasmine.createSpyObj(['getPayment', 'getUserId', 'postPayment', 'isValidCreditCard', 'deletePayment']);
+    accountServiceMock = jasmine.createSpyObj(['getPayment', 'getUserId', 'postPayment', 'isValidCreditCard', 'deletePayment', 'isNullOrWhitespace']);
 
     TestBed.configureTestingModule({
       declarations: [ EditPaymentComponent ],
@@ -68,6 +68,7 @@ describe('EditPaymentComponent', () => {
       accountServiceMock.getPayment.and.returnValue(of(paymentsMock));
       accountServiceMock.postPayment.and.returnValue(of(true));
       accountServiceMock.isValidCreditCard.and.returnValue(true);
+      accountServiceMock.isNullOrWhitespace.and.returnValue(false);
 
       const newCard: Payment = {
         id: 0,
@@ -88,6 +89,7 @@ describe('EditPaymentComponent', () => {
     it('should not add card with empty name', () => {
       accountServiceMock.getPayment.and.returnValue(of(paymentsMock));
       accountServiceMock.isValidCreditCard.and.returnValue(true);
+      accountServiceMock.isNullOrWhitespace.and.returnValue(true);
 
       const newCard: Payment = {
         id: 0,
@@ -106,6 +108,7 @@ describe('EditPaymentComponent', () => {
     it('should not add card with invalid number', () => {
       accountServiceMock.getPayment.and.returnValue(of(paymentsMock));
       accountServiceMock.isValidCreditCard.and.returnValue(false);
+      accountServiceMock.isNullOrWhitespace.and.returnValue(true);
 
       const newCard: Payment = {
         id: 0,
@@ -124,6 +127,7 @@ describe('EditPaymentComponent', () => {
     it('should not add expired card', () => {
       accountServiceMock.getPayment.and.returnValue(of(paymentsMock));
       accountServiceMock.isValidCreditCard.and.returnValue(false);
+      accountServiceMock.isNullOrWhitespace.and.returnValue(true);
 
       const newCard: Payment = {
         id: 0,
